@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/image/react.svg'
-import viteLogo from '/vite.svg'
-import './assets/css/App.css'
+import {Route, Routes, useNavigate, useMatch} from "react-router-dom";
+import Login from "./views/Login";
+import Home from "./views/Home";
+import {useEffect} from "react";
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // 自定义的路由拦截组件
+    const PrivateRoute = ({ path, element }) => {
+        const isAuthenticated = false; // 根据实际情况获取用户是否已经通过认证
+        const navigate = useNavigate();
+        const match = useMatch(path);
+
+        useEffect(() => {
+            if (!isAuthenticated && match) {
+                console.info('判断')
+                // 如果用户未通过认证，并且匹配当前路由路径，则导航到登录页面
+                navigate('/login', { replace: true });
+            }
+        })
+        return element;
+    };
+
+    return (
+        <Routes>
+            <Route path={"/login"} element={<Login/>}></Route>
+            <Route path={"/"} element={<PrivateRoute path="/" element={<Home />} />}></Route>
+            <Route path="/home" element={<PrivateRoute path="/home" element={<Home />} />} />
+        </Routes>
+    )
 }
 
 export default App
