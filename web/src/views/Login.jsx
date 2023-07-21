@@ -1,15 +1,51 @@
 import {Button, Form, Image, Input} from "antd";
 import '../assets/css/Login.css'
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {getVerifyCode, login} from "../api/login/login";
+import {errorMsg} from "../assets/js/message";
+import {useDispatch} from "react-redux";
+import {updateToken} from "../store/redux";
 
 const Login = () => {
 
+    const dispatch = useDispatch()
+    //  提交登录
     const onFinish = (value) => {
         setLoading(true)
-        console.info(value)
+        const formData = {...value, uuid: uuid}
+
+        login(formData).then(res => {
+            if (res.success){
+                console.info(res.data.token)
+                dispatch(updateToken(res.data.token))
+            } else {
+                errorMsg(res.msg)
+            }
+            setLoading(false)
+        })
+
     }
 
+    //  定义loading状态
     const [loading, setLoading] = useState(false)
+
+    //  定义验证码返回的uuid
+    const [uuid, setUuid] = useState(null)
+
+    //  定义验证码图片地址
+    const [image, setImage] = useState(null)
+
+    useEffect(() => {
+        getCode()
+    }, [])
+
+    //  获取验证码
+    const getCode = () => {
+        getVerifyCode().then(res => {
+            setUuid(res.uuid)
+            setImage(res.img)
+        })
+    }
 
     return(
         <div className={"login"}>
@@ -26,8 +62,8 @@ const Login = () => {
                                style={{display: "inline-block", width: 'calc(100% - 126px)'}}>
                         <Input placeholder={"请输入验证码"}></Input>
                     </Form.Item>
-                    <Form.Item name={"img"} style={{display: "inline-block", width: '110px', margin: '0 8px'}}>
-                        <Image src="../assets/image/logo.png"></Image>
+                    <Form.Item style={{display: "inline-block", width: '110px', margin: '0 8px'}}>
+                        <Image src={image}></Image>
                     </Form.Item>
                 </Form.Item>
                 <Form.Item>
