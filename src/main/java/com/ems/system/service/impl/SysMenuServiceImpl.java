@@ -94,15 +94,19 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             //  组装菜单树
             for (SysMenu sysMenu : topList) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id", sysMenu.getId());
-                jsonObject.put("parentId", sysMenu.getParentId());
-                jsonObject.put("name", sysMenu.getName());
+//                jsonObject.put("id", sysMenu.getId());
+//                jsonObject.put("parentId", sysMenu.getParentId());
+//                jsonObject.put("name", sysMenu.getName());
+//                jsonObject.put("path", sysMenu.getPath());
+//                jsonObject.put("icon", sysMenu.getIcon());
+//                jsonObject.put("sort", sysMenu.getSort());
+//                jsonObject.put("component", sysMenu.getComponent());
+//                jsonObject.put("permission", sysMenu.getPermission());
+//                jsonObject.put("type", sysMenu.getType());
+                jsonObject.put("label", sysMenu.getName());
+//                jsonObject.put("icon", sysMenu.getIcon());
+                jsonObject.put("key", sysMenu.getId());
                 jsonObject.put("path", sysMenu.getPath());
-                jsonObject.put("icon", sysMenu.getIcon());
-                jsonObject.put("sort", sysMenu.getSort());
-                jsonObject.put("component", sysMenu.getComponent());
-                jsonObject.put("permission", sysMenu.getPermission());
-                jsonObject.put("type", sysMenu.getType());
                 if (!CollectionUtils.isEmpty(getChildById(menuListAll, sysMenu.getId()))){
                     jsonObject.put("children", getChildById(menuListAll, sysMenu.getId()));
                 }

@@ -1,25 +1,35 @@
 import {Button, Form, Image, Input} from "antd";
 import '../assets/css/Login.css'
 import {useEffect, useState} from "react";
+import {useNavigate} from 'react-router-dom'
 import {getVerifyCode, login} from "../api/login/login";
 import {errorMsg} from "../assets/js/message";
 import {useDispatch} from "react-redux";
-import {updateToken} from "../store/redux";
+import {updateToken, updateRefreshToken, updateInfo} from "../store/redux";
 
 const Login = () => {
 
     const dispatch = useDispatch()
+
+    const navigate = useNavigate();
+
     //  提交登录
     const onFinish = (value) => {
         setLoading(true)
+        //  将uuid添加到提交的数据中(因为form表单中没有uuid)
         const formData = {...value, uuid: uuid}
 
         login(formData).then(res => {
             if (res.success){
-                console.info(res.data.token)
+                console.info(res.data)
                 dispatch(updateToken(res.data.token))
+                dispatch(updateRefreshToken(res.data.refreshToken))
+                dispatch(updateInfo(res.data.userDto))
+
+                navigate('/index')
             } else {
                 errorMsg(res.msg)
+                getCode()
             }
             setLoading(false)
         })
@@ -37,7 +47,7 @@ const Login = () => {
 
     useEffect(() => {
         getCode()
-    }, [])
+    }, [navigate])
 
     //  获取验证码
     const getCode = () => {
@@ -63,7 +73,7 @@ const Login = () => {
                         <Input placeholder={"请输入验证码"}></Input>
                     </Form.Item>
                     <Form.Item style={{display: "inline-block", width: '110px', margin: '0 8px'}}>
-                        <Image src={image}></Image>
+                        <Image src={image} onClick={getCode}></Image>
                     </Form.Item>
                 </Form.Item>
                 <Form.Item>
