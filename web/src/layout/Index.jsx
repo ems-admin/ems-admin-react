@@ -1,5 +1,8 @@
 import {Layout, Space} from "antd";
-import MenuSider from "./MenuSider";
+import SysSider from "./SysSider";
+import SysHeader from "./SysHeader";
+import SysContent from "./SysContent";
+import SysFooter from "./SysFooter";
 const {Sider, Header, Content, Footer} = Layout
 
 const siderStyle = {
@@ -13,12 +16,18 @@ const Index = () => {
             <Space direction={"vertical"} style={{width: '100%'}} size={[0, 48]}>
                 <Layout>
                     <Sider style={siderStyle}>
-                        <MenuSider/>
+                        <SysSider/>
                     </Sider>
                     <Layout>
-                        <Header></Header>
-                        <Content></Content>
-                        <Footer></Footer>
+                        <Header>
+                            <SysHeader/>
+                        </Header>
+                        <Content>
+                            <SysContent/>
+                        </Content>
+                        <Footer>
+                            <SysFooter/>
+                        </Footer>
                     </Layout>
                 </Layout>
             </Space>

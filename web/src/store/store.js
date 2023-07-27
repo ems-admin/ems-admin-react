@@ -12,12 +12,16 @@ import {
 } from 'redux-persist'
 
 // 创建的reducer
-import userInfoReducer from './redux'
+import userInfoReducer  from './userRedux'
+
+import menuInfoReducer from './menuRedux'
+
 
 
 // combineReducers合并reducer
 const reducers = combineReducers({
-    userInfo: userInfoReducer
+    userInfo: userInfoReducer,
+    menuInfo: menuInfoReducer
 })
 
 //  配置缓存

@@ -39,4 +39,7 @@ const userInfoSlice = createSlice({
 
 export const { updateToken, updateRefreshToken, updateInfo, updateLoadMenu, updateRouter } = userInfoSlice.actions
 
+
 export default userInfoSlice.reducer
+
+

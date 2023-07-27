@@ -6,7 +6,7 @@ import Login from "../views/Login";
 import Home from "../views/Home";
 import {queryAllMenu} from "../api/menu/sysMenu";
 import {errorMsg} from "../assets/js/message";
-import {updateLoadMenu} from "../store/redux";
+import {updateLoadMenu} from "../store/userRedux";
 import {useSelector} from "react-redux";
 
 // 自定义的路由拦截组件

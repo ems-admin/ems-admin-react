@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 import {getVerifyCode, login} from "../api/login/login";
 import {errorMsg} from "../assets/js/message";
 import {useDispatch} from "react-redux";
-import {updateToken, updateRefreshToken, updateInfo} from "../store/redux";
+import {updateToken, updateRefreshToken, updateInfo} from "../store/userRedux";
 
 const Login = () => {
 
