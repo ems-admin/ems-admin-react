@@ -9,7 +9,8 @@ const menuInfoSlice = createSlice({
             openTabs: [
                 {
                     label: '首页',
-                    key: '/home'
+                    key: '/home',
+                    realpath: 'Home'
                 }
             ]
         }

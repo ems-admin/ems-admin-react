@@ -1,18 +1,36 @@
 import {Tabs} from "antd";
 import {useSelector, useDispatch} from "react-redux";
 import {removeTab, updateActiveKey} from "../store/menuRedux";
+import {lazy, Suspense} from "react";
 
 const SysContent = () => {
 
+    //  获取当前项目views目录下所有的组件
+    const modules = import.meta.glob('../views/**/*.jsx')
+
+    //  获取所有已打开菜单列表
     const items = useSelector(state => state.menuInfo.menuInfo.openTabs)
 
+    //  深拷贝已打开的菜单,避免修改里面children的时候,将缓存中的值一起修改了
+    const newItems = JSON.parse(JSON.stringify(items))
+
+    //  定义dispatch用来修改缓存中的方法
     const dispatch = useDispatch()
 
-    console.info('打开 的菜单')
-    console.info(items)
-
+    //  获取当前激活tab标签的key值
     const activeKey = useSelector(state => state.menuInfo.menuInfo.activeKey)
 
+    //  获取当前对象
+    const currentItem = newItems.find(item => item.key === activeKey)
+    //  组装获取的modules的key值
+    const moduleKey = '../views/' + currentItem.realpath + '.jsx'
+    if (currentItem){
+        //  将当前对象中的组件路径加载为组件
+        const MyComponent = lazy(modules[moduleKey]);
+        currentItem.children = <Suspense><MyComponent/></Suspense>
+    }
+
+    //  移除标签
     const onEdit = (targetKey, action) => {
         if (action !== 'add') {
             const targetIndex = items.findIndex((pane) => pane.key === targetKey)
@@ -24,13 +42,20 @@ const SysContent = () => {
             dispatch(removeTab(targetKey))
         }
     }
+
+    //  切换标签
+    const onChange = (newActiveKey) => {
+        dispatch(updateActiveKey(newActiveKey))
+    }
+
     return(
         <>
             <Tabs
                 hideAdd
+                onChange={onChange}
                 activeKey={activeKey}
                 type="editable-card"
-                items={items}
+                items={newItems}
                 onEdit={onEdit}
             />
         </>

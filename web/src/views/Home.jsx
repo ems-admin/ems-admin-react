@@ -2,8 +2,9 @@
 const Home = () => {
     return(
         <>
-            <div className="home">
-                <img alt="EMS logo" />
+            <div>
+                {/*<img alt="EMS logo" src={'../assets/image/ems.png'} />*/}
+                <h1>welcome to ems-admin</h1>
             </div>
         </>
     )

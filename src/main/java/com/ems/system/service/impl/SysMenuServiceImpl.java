@@ -100,7 +100,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 //                jsonObject.put("path", sysMenu.getPath());
 //                jsonObject.put("icon", sysMenu.getIcon());
 //                jsonObject.put("sort", sysMenu.getSort());
-//                jsonObject.put("component", sysMenu.getComponent());
+                jsonObject.put("realpath", sysMenu.getComponent());
 //                jsonObject.put("permission", sysMenu.getPermission());
 //                jsonObject.put("type", sysMenu.getType());
                 jsonObject.put("label", sysMenu.getName());
