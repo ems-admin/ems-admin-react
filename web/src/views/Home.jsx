@@ -1,9 +1,10 @@
-
+import Logo from '../assets/image/ems.png'
 const Home = () => {
+
     return(
         <>
-            <div>
-                {/*<img alt="EMS logo" src={'../assets/image/ems.png'} />*/}
+            <div style={{textAlign: 'center'}}>
+                <img alt="EMS logo" src={Logo} />
                 <h1>welcome to ems-admin</h1>
             </div>
         </>

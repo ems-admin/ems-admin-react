@@ -18,14 +18,15 @@ const Login = () => {
         setLoading(true)
         //  将uuid添加到提交的数据中(因为form表单中没有uuid)
         const formData = {...value, uuid: uuid}
-
         login(formData).then(res => {
             if (res.success){
-                console.info(res.data)
+                //  缓存token
                 dispatch(updateToken(res.data.token))
+                //  缓存刷新token
                 dispatch(updateRefreshToken(res.data.refreshToken))
+                //  缓存当前登录用户信息
                 dispatch(updateInfo(res.data.userDto))
-
+                //  跳转到主页
                 navigate('/index')
             } else {
                 errorMsg(res.msg)
