@@ -54,7 +54,8 @@ const SysSider = ({handleValueChange}) => {
         height: '64px',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        cursor: 'pointer'
     }
 
     //  点击logo,收缩菜单
@@ -68,8 +69,8 @@ const SysSider = ({handleValueChange}) => {
 
     return (
         <>
-            <div style={logoStyle}>
-                <Image src={Logo} height={40} preview={false} onClick={clickLogo}/>
+            <div style={logoStyle} onClick={clickLogo}>
+                <Image src={Logo} height={40} preview={false} />
             </div>
             <Menu
                 style={{width: '200px'}}
