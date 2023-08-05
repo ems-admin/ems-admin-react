@@ -5,9 +5,8 @@ import {getVerifyCode, login} from "../api/login/login";
 import {errorMsg} from "../assets/js/message";
 import {useDispatch} from "react-redux";
 import {updateToken, updateRefreshToken, updateInfo} from "../store/userRedux";
-import {createFromIconfontCN} from "@ant-design/icons";
+import IconFont from "../components/IconFont";
 import '../assets/css/Login.css'
-import '../assets/iconfont/iconfont'
 
 
 const Login = () => {
@@ -61,9 +60,7 @@ const Login = () => {
         })
     }
 
-    const IconFont = createFromIconfontCN({
-        scriptUrl: ''
-    })
+
 
     return(
         <div className={"login"}>

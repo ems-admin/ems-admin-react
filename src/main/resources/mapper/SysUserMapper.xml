@@ -46,7 +46,7 @@
             /*不显示超级管理员*/
             t3.role_code != 'ROLE_ADMIN'
             <if test="blurry != null and blurry != ''">
-                AND t1.username = #{blurry} OR t1.nick_name = ${blurry}
+                AND (t1.username like #{blurry} OR t1.nick_name like #{blurry})
             </if>
         </where>
         GROUP BY

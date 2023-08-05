@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import store from "./store/store";
 import {PersistGate} from 'redux-persist/integration/react'
 import {persistStore} from "redux-persist";
+import {ConfigProvider} from "antd";
 
 let persistor = persistStore(store);
 
@@ -13,8 +14,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
       <BrowserRouter>
           <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <App />
+            <PersistGate loading={'程序加载中...'} persistor={persistor}>
+                <ConfigProvider componentSize={'middle'}>
+                    <App />
+                </ConfigProvider>
             </PersistGate>
           </Provider>
       </BrowserRouter>

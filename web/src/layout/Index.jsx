@@ -2,8 +2,7 @@ import {Layout} from "antd";
 import SysSider from "./SysSider";
 import SysHeader from "./SysHeader";
 import SysContent from "./SysContent";
-import SysFooter from "./SysFooter";
-const {Sider, Header, Content, Footer} = Layout
+const {Sider, Header, Content} = Layout
 import {useCallback, useState} from "react";
 import MenuContext from "../assets/js/context";
 
@@ -33,9 +32,6 @@ const Index = () => {
                 <Content>
                     <SysContent/>
                 </Content>
-                <Footer>
-                    <SysFooter/>
-                </Footer>
             </Layout>
         </Layout>
     )

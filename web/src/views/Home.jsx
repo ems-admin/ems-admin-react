@@ -5,7 +5,7 @@ const Home = () => {
         <>
             <div style={{textAlign: 'center'}}>
                 <img alt="EMS logo" src={Logo} />
-                <h1>welcome to ems-admin</h1>
+                <h1 style={{fontSize: '60px'}}>welcome to ems-admin</h1>
             </div>
         </>
     )
