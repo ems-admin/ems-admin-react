@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
           <Provider store={store}>
             <PersistGate loading={'程序加载中...'} persistor={persistor}>
-                <ConfigProvider componentSize={'middle'}>
+                <ConfigProvider componentSize={'small'}>
                     <App />
                 </ConfigProvider>
             </PersistGate>

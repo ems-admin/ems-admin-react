@@ -1,5 +1,5 @@
 import {createContext} from "react";
 
-const MenuContext = createContext(null)
+const GlobalContext = createContext(null)
 
-export default MenuContext;
+export default GlobalContext;

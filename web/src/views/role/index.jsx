@@ -1,9 +1,9 @@
-import {Button, Input, Switch, Table} from "antd";
-import {useEffect, useState} from "react";
-import {enabledUser, getUserList} from "../../api/user/sysUser";
-import {errorMsg, successMsg} from "../../assets/js/message";
+import {Button, Input, Table} from "antd";
+import {useCallback, useEffect, useState} from "react";
+import {errorMsg} from "../../assets/js/message";
 import ModalContext from "../../assets/js/context";
-import EditUser from "./EditUser";
+import {getRoleList} from "../../api/role/sysRole";
+import EditRole from "./EditRole";
 
 const Index = () => {
 
@@ -16,40 +16,36 @@ const Index = () => {
     //  编辑弹窗控制
     const [openModal, setOpenModal] = useState(false)
 
+    //  定义一个角色对象,作为传入子组件的变量
+    const [roleObj, setRoleObj] = useState({})
+
     //  定义列
     const columns = [
         {
             key: 'id',
-            title: '用户名',
-            dataIndex: 'username'
+            title: '角色名称',
+            dataIndex: 'roleName'
         },
         {
             key: 'id',
-            title: '昵称',
-            dataIndex: 'nickName'
+            title: '角色代码',
+            dataIndex: 'roleCode'
         },
         {
             key: 'id',
-            title: '角色',
-            dataIndex: 'roles'
-        },
-        {
-            key: 'id',
-            title: '状态',
-            dataIndex: 'enabled',
-            render: (enabled, record) => {
-                return <Switch checkedChildren={'启用'} unCheckedChildren={'停用'} defaultChecked={enabled} onChange={(checked => changeStatus(checked, record))}/>
-            }
+            title: '角色说明',
+            dataIndex: 'description'
         },
         {
             key: 'operate',
             title: '操作',
             dataIndex: 'operate',
             align: 'center',
-            render: () => {
+            render: (_, record) => {
                 return <>
-                    <Button type={"primary"} size={"small"} onClick={editUser}>编辑</Button>
-                    <Button type={"primary"} size={"small"} danger>删除</Button>
+                    <Button className={'success'}>授权</Button>
+                    <Button type={"primary"} onClick={() => editRole(JSON.parse(JSON.stringify(record)))}>编辑</Button>
+                    <Button type={"primary"} danger>删除</Button>
                 </>
 
             },
@@ -58,41 +54,34 @@ const Index = () => {
     ]
 
     //  获取用户列表
-    const getUserTable = () => {
-        getUserList({blurry: blurry}).then(res => {
+    const getRoleTable = () => {
+        getRoleList({blurry: blurry}).then(res => {
             if (res.success) {
-                setDataSource(res.data.records)
+                setDataSource(res.data)
             } else {
                 errorMsg(res.msg)
             }
         })
     }
+
+    //  子组件调用父组件方法
+    const handleChild = useCallback(() => {
+        getRoleTable()
+    }, [])
 
     //  查询框输入
     const changeValue = (e) => {
         setBlurry(e.target.value)
     }
 
-    //  修改用户状态
-    const changeStatus = (checked, row) => {
-        row.enabled = checked
-        enabledUser(row).then(res => {
-            if (res.success){
-                successMsg(res.data)
-            } else {
-                errorMsg(res.msg)
-            }
-        })
-    }
-
     //  编辑用户
-    const editUser = (data) => {
+    const editRole = (data) => {
         setOpenModal(true)
-        console.info(data)
+        setRoleObj(data)
     }
 
     useEffect(() => {
-        getUserTable()
+        getRoleTable()
     }, [])
 
     return (
@@ -107,8 +96,12 @@ const Index = () => {
                 ></Input>
                 <Button
                     type={"primary"}
-                    onClick={getUserTable}
+                    onClick={getRoleTable}
                 >查询</Button>
+                <Button
+                    className={'add-btn'}
+                    onClick={editRole}
+                >新增</Button>
             </div>
             <Table
                 dataSource={dataSource}
@@ -118,9 +111,9 @@ const Index = () => {
                 pagination={false}
             ></Table>
 
-            {/*编辑Modal*/}
-            <ModalContext.Provider value={{openModal, setOpenModal}}>
-                <EditUser/>
+            {/*角色编辑页面*/}
+            <ModalContext.Provider value={{openModal, setOpenModal, roleObj}}>
+                <EditRole getList={handleChild}></EditRole>
             </ModalContext.Provider>
         </>
     )
