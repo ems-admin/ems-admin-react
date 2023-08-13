@@ -3,7 +3,9 @@ import {useCallback, useEffect, useState} from "react";
 import {delUser, enabledUser, getUserList} from "../../api/user/sysUser";
 import {errorMsg, infoMsg, successMsg} from "../../assets/js/message";
 import ModalContext from "../../assets/js/context";
+import PageContext from "../../assets/js/context";
 import EditUser from "./EditUser";
+import MyPagination from "../../components/MyPagination";
 
 const Index = () => {
 
@@ -18,6 +20,14 @@ const Index = () => {
 
     //  定义一个用户对象,用于编辑时传入子组件中
     const [userObj, setUserObj] = useState({})
+
+    //  定义分页参数
+    //  总条数
+    const [total, setTotal] = useState(0)
+    //  当面页码
+    const [currentPage, setCurrentPage] = useState(1)
+    //  每页条数
+    const [pageSize, setPageSize] = useState(10)
 
     //  定义列
     const columns = [
@@ -41,7 +51,8 @@ const Index = () => {
             title: '状态',
             dataIndex: 'enabled',
             render: (enabled, record) => {
-                return <Switch checkedChildren={'启用'} unCheckedChildren={'停用'} defaultChecked={enabled} onChange={(checked => changeStatus(checked, record))}/>
+                return <Switch checkedChildren={'启用'} unCheckedChildren={'停用'} defaultChecked={enabled}
+                               onChange={(checked => changeStatus(checked, record))}/>
             }
         },
         {
@@ -51,7 +62,8 @@ const Index = () => {
             align: 'center',
             render: (_, record) => {
                 return <>
-                    <Button type={"primary"} size={"small"} onClick={() => editUser(JSON.parse(JSON.stringify(record)))}>编辑</Button>
+                    <Button type={"primary"} size={"small"}
+                            onClick={() => editUser(JSON.parse(JSON.stringify(record)))}>编辑</Button>
                     <Button type={"primary"} size={"small"} danger onClick={() => deleteUser(record.id)}>删除</Button>
                 </>
 
@@ -62,9 +74,17 @@ const Index = () => {
 
     //  获取用户列表
     const getUserTable = () => {
-        getUserList({blurry: blurry}).then(res => {
+        console.info('pageSize: ' + pageSize)
+        console.info('currentPage: ' + currentPage)
+        const params = {
+            blurry: blurry,
+            size: pageSize,
+            currentPage: currentPage
+        }
+        getUserList(params).then(res => {
             if (res.success) {
                 setDataSource(res.data.records)
+                setTotal(res.data.total)
             } else {
                 errorMsg(res.msg)
             }
@@ -80,7 +100,7 @@ const Index = () => {
     const changeStatus = (checked, row) => {
         row.enabled = checked
         enabledUser(row).then(res => {
-            if (res.success){
+            if (res.success) {
                 successMsg(res.data)
             } else {
                 errorMsg(res.msg)
@@ -102,9 +122,9 @@ const Index = () => {
             content: '确认删除当前用户?',
             okText: '确认',
             cancelText: '取消',
-            onOk(){
+            onOk() {
                 delUser({id: userId}).then(res => {
-                    if (res.success){
+                    if (res.success) {
                         successMsg(res.data)
                         getUserTable()
                     } else {
@@ -112,7 +132,7 @@ const Index = () => {
                     }
                 })
             },
-            onCancel(){
+            onCancel() {
                 infoMsg('操作已取消')
             }
         })
@@ -121,7 +141,7 @@ const Index = () => {
     //  子组件调用父组件方法
     const handleChild = useCallback(() => {
         getUserTable()
-    }, [])
+    }, [pageSize, currentPage])
 
     useEffect(() => {
         getUserTable()
@@ -154,9 +174,13 @@ const Index = () => {
                 pagination={false}
             ></Table>
 
-            {/*编辑Modal*/}
-            <ModalContext.Provider value={{openModal, setOpenModal, userObj}}>
+            <ModalContext.Provider value={{openModal, setOpenModal, userObj,
+                pageSize, setPageSize, currentPage, setCurrentPage, total, setTotal}}>
+                {/*分页*/}
+                <MyPagination getList={handleChild}></MyPagination>
+                {/*编辑Modal*/}
                 <EditUser getList={handleChild}></EditUser>
+
             </ModalContext.Provider>
         </>
     )
