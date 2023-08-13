@@ -1,5 +1,5 @@
 import {Button, Input, Switch, Table} from "antd";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {enabledUser, getUserList} from "../../api/user/sysUser";
 import {errorMsg, successMsg} from "../../assets/js/message";
 import ModalContext from "../../assets/js/context";
@@ -15,6 +15,9 @@ const Index = () => {
 
     //  编辑弹窗控制
     const [openModal, setOpenModal] = useState(false)
+
+    //  定义一个用户对象,用于编辑时传入子组件中
+    const [userObj, setUserObj] = useState({})
 
     //  定义列
     const columns = [
@@ -46,9 +49,9 @@ const Index = () => {
             title: '操作',
             dataIndex: 'operate',
             align: 'center',
-            render: () => {
+            render: (_, record) => {
                 return <>
-                    <Button type={"primary"} size={"small"} onClick={editUser}>编辑</Button>
+                    <Button type={"primary"} size={"small"} onClick={() => editUser(JSON.parse(JSON.stringify(record)))}>编辑</Button>
                     <Button type={"primary"} size={"small"} danger>删除</Button>
                 </>
 
@@ -88,8 +91,13 @@ const Index = () => {
     //  编辑用户
     const editUser = (data) => {
         setOpenModal(true)
-        console.info(data)
+        setUserObj(data)
     }
+
+    //  子组件调用父组件方法
+    const handleChild = useCallback(() => {
+        getUserTable()
+    }, [])
 
     useEffect(() => {
         getUserTable()
@@ -109,6 +117,10 @@ const Index = () => {
                     type={"primary"}
                     onClick={getUserTable}
                 >查询</Button>
+                <Button
+                    className={'add-btn'}
+                    onClick={editUser}
+                >新增</Button>
             </div>
             <Table
                 dataSource={dataSource}
@@ -119,8 +131,8 @@ const Index = () => {
             ></Table>
 
             {/*编辑Modal*/}
-            <ModalContext.Provider value={{openModal, setOpenModal}}>
-                <EditUser/>
+            <ModalContext.Provider value={{openModal, setOpenModal, userObj}}>
+                <EditUser getList={handleChild}></EditUser>
             </ModalContext.Provider>
         </>
     )

@@ -2,7 +2,7 @@ import {Button, Form, Input, Modal} from "antd";
 import {useContext, useState} from "react";
 import ModalContext from "../../assets/js/context";
 import {editRole} from "../../api/role/sysRole";
-import {errorMsg} from "../../assets/js/message";
+import {errorMsg, successMsg} from "../../assets/js/message";
 
 const EditUser = ({getList}) => {
 
@@ -37,6 +37,7 @@ const EditUser = ({getList}) => {
         const formData = {...values}
         editRole(formData).then(res => {
             if (res.success){
+                successMsg(res.data)
                 setOpenEdit(false)
                 getList()
             } else {

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionConfig extends ResultUtil {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleException(Exception exception){
+        exception.printStackTrace();
         return fail(false, ExceptionUtil.getStackTraceInfo(exception));
     }
 }
