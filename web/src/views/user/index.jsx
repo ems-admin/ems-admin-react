@@ -167,6 +167,7 @@ const Index = () => {
                 >新增</Button>
             </div>
             <Table
+                className={'page-table'}
                 dataSource={dataSource}
                 columns={columns}
                 rowKey={'id'}

@@ -45,3 +45,15 @@
 .ant-modal-footer{
     text-align: center!important;
 }
+/**
+默认配置全局带分页table高度
+ */
+.page-table .ant-table-container{
+    height: calc(100vh - 200px);
+}
+/**
+默认配置全局不带分页table高度
+ */
+.no-page-table .ant-table-container{
+    height: calc(100vh - 180px);
+}
