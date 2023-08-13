@@ -1,9 +1,10 @@
-import {Button, Input, Table} from "antd";
+import {Button, Input, Modal, Table} from "antd";
 import {useCallback, useEffect, useState} from "react";
-import {errorMsg} from "../../assets/js/message";
+import {errorMsg, infoMsg, successMsg} from "../../assets/js/message";
 import ModalContext from "../../assets/js/context";
-import {getRoleList} from "../../api/role/sysRole";
+import {delRole, getRoleList} from "../../api/role/sysRole";
 import EditRole from "./EditRole";
+import AuthorizeRole from "./AuthorizeRole";
 
 const Index = () => {
 
@@ -14,10 +15,16 @@ const Index = () => {
     const [dataSource, setDataSource] = useState([])
 
     //  编辑弹窗控制
-    const [openModal, setOpenModal] = useState(false)
+    const [openEdit, setOpenEdit] = useState(false)
+
+    //  授权弹窗控制
+    const [openAuth, setOpenAuth] = useState(false)
 
     //  定义一个角色对象,作为传入子组件的变量
     const [roleObj, setRoleObj] = useState({})
+
+    //  定义当前角色ID,作为传入子组件的变量
+    const [roleId, setRoleId] = useState(null)
 
     //  定义列
     const columns = [
@@ -43,9 +50,9 @@ const Index = () => {
             align: 'center',
             render: (_, record) => {
                 return <>
-                    <Button className={'success'}>授权</Button>
+                    <Button className={'success'} onClick={() => authorizeRole(record.id)}>授权</Button>
                     <Button type={"primary"} onClick={() => editRole(JSON.parse(JSON.stringify(record)))}>编辑</Button>
-                    <Button type={"primary"} danger>删除</Button>
+                    <Button type={"primary"} danger onClick={() => deleteRole(record.id)}>删除</Button>
                 </>
 
             },
@@ -74,10 +81,40 @@ const Index = () => {
         setBlurry(e.target.value)
     }
 
-    //  编辑用户
+    //  角色授权
+    const authorizeRole = (roleId) => {
+        setOpenAuth(true)
+        setRoleId(roleId)
+    }
+
+    //  编辑角色
     const editRole = (data) => {
-        setOpenModal(true)
+        setOpenEdit(true)
         setRoleObj(data)
+    }
+
+    const {confirm} = Modal
+    //  删除角色
+    const deleteRole = (roleId) => {
+        confirm({
+            title: '删除角色',
+            content: '确认删除当前角色?',
+            okText: '确认',
+            cancelText: '取消',
+            onOk(){
+                delRole({id: roleId}).then(res => {
+                    if (res.success){
+                        successMsg(res.data)
+                        getRoleTable()
+                    } else {
+                        errorMsg(res.msg)
+                    }
+                })
+            },
+            onCancel(){
+                infoMsg('操作已取消')
+            }
+        })
     }
 
     useEffect(() => {
@@ -112,8 +149,13 @@ const Index = () => {
             ></Table>
 
             {/*角色编辑页面*/}
-            <ModalContext.Provider value={{openModal, setOpenModal, roleObj}}>
+            <ModalContext.Provider value={{openEdit, setOpenEdit, roleObj}}>
                 <EditRole getList={handleChild}></EditRole>
+            </ModalContext.Provider>
+
+            {/*角色授权页面*/}
+            <ModalContext.Provider value={{openAuth, setOpenAuth, roleId}}>
+                <AuthorizeRole></AuthorizeRole>
             </ModalContext.Provider>
         </>
     )

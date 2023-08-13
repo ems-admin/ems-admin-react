@@ -6,7 +6,7 @@ import {errorMsg} from "../../assets/js/message";
 
 const EditUser = ({getList}) => {
 
-    const {openModal, setOpenModal, roleObj} = useContext(ModalContext)
+    const {openEdit, setOpenEdit, roleObj} = useContext(ModalContext)
 
     const [form] = Form.useForm()
 
@@ -15,13 +15,6 @@ const EditUser = ({getList}) => {
     const [title, setTitle] = useState('新增角色')
 
     const [loading, setLoading] = useState(false)
-
-    const modalBodyStyle = {
-        'max-height': '500px',
-        'min-height': '300px',
-        'overflow-y': 'auto',
-        'padding': '20px 30px'
-    }
 
     //  打开后执行的操作
     const afterOpenModal = (open) => {
@@ -44,7 +37,7 @@ const EditUser = ({getList}) => {
         const formData = {...values}
         editRole(formData).then(res => {
             if (res.success){
-                setOpenModal(false)
+                setOpenEdit(false)
                 getList()
             } else {
                 errorMsg(res.msg)
@@ -54,15 +47,15 @@ const EditUser = ({getList}) => {
     }
 
     return(
-        <>
+        <div>
             <Modal
                 title={title}
-                open={openModal}
+                className={'edit-modal'}
+                open={openEdit}
                 width={'50%'}
-                bodyStyle={modalBodyStyle}
                 afterOpenChange={afterOpenModal}
                 maskClosable={false}
-                onCancel={() => setOpenModal(false)}
+                onCancel={() => setOpenEdit(false)}
                 footer={[
                     <Button key={'reset'} onClick={() => form.resetFields()}>重置</Button>,
                     <Button key={'ok'} type={"primary"} loading={loading} onClick={() => form.submit()}>确认</Button>,
@@ -83,7 +76,7 @@ const EditUser = ({getList}) => {
                     </Form.Item>
                 </Form>
             </Modal>
-        </>
+        </div>
     )
 }
 

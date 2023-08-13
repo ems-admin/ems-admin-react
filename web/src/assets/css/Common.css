@@ -31,8 +31,17 @@
 }
 
 /**
+默认配置全局modal样式
+ */
+.edit-modal .ant-modal-body{
+    max-height: 500px;
+    min-height: 300px;
+    overflow-y: auto;
+    padding: 20px 30px;
+}
+/**
 默认将所有modal的底部按钮居中
  */
 .ant-modal-footer{
-    text-align: center;
+    text-align: center!important;
 }
