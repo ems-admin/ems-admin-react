@@ -1,7 +1,7 @@
-import {Button, Input, Switch, Table} from "antd";
+import {Button, Input, Modal, Switch, Table} from "antd";
 import {useCallback, useEffect, useState} from "react";
-import {enabledUser, getUserList} from "../../api/user/sysUser";
-import {errorMsg, successMsg} from "../../assets/js/message";
+import {delUser, enabledUser, getUserList} from "../../api/user/sysUser";
+import {errorMsg, infoMsg, successMsg} from "../../assets/js/message";
 import ModalContext from "../../assets/js/context";
 import EditUser from "./EditUser";
 
@@ -52,7 +52,7 @@ const Index = () => {
             render: (_, record) => {
                 return <>
                     <Button type={"primary"} size={"small"} onClick={() => editUser(JSON.parse(JSON.stringify(record)))}>编辑</Button>
-                    <Button type={"primary"} size={"small"} danger>删除</Button>
+                    <Button type={"primary"} size={"small"} danger onClick={() => deleteUser(record.id)}>删除</Button>
                 </>
 
             },
@@ -92,6 +92,30 @@ const Index = () => {
     const editUser = (data) => {
         setOpenModal(true)
         setUserObj(data)
+    }
+
+    const {confirm} = Modal
+    //  删除用户
+    const deleteUser = (userId) => {
+        confirm({
+            title: '删除用户',
+            content: '确认删除当前用户?',
+            okText: '确认',
+            cancelText: '取消',
+            onOk(){
+                delUser({id: userId}).then(res => {
+                    if (res.success){
+                        successMsg(res.data)
+                        getUserTable()
+                    } else {
+                        errorMsg(res.msg)
+                    }
+                })
+            },
+            onCancel(){
+                infoMsg('操作已取消')
+            }
+        })
     }
 
     //  子组件调用父组件方法
