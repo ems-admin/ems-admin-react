@@ -99,7 +99,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                 if ("left".equals(type)){
                     jsonObject.put("label", sysMenu.getName());
                     jsonObject.put("icon", sysMenu.getIcon());
-                    jsonObject.put("key", sysMenu.getId());
+                    jsonObject.put("key", sysMenu.getPath() != null ? sysMenu.getPath() : UUID.randomUUID().toString());
                 } else {
                     jsonObject.put("parentId", sysMenu.getParentId());
                     jsonObject.put("sort", sysMenu.getSort());
