@@ -10,7 +10,8 @@ const menuInfoSlice = createSlice({
                 {
                     label: '首页',
                     key: '/home',
-                    realpath: 'Home'
+                    realpath: 'Home',
+                    closable: false
                 }
             ]
         }

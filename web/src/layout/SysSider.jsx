@@ -2,7 +2,7 @@ import {Image, Menu} from "antd";
 import {useContext, useEffect, useState} from "react";
 import {getMenuTree} from "../api/menu/sysMenu";
 import {errorMsg} from "../assets/js/message";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {updateActiveKey, updateOpenTabs} from "../store/menuRedux";
 import Logo from '../assets/image/ems.png'
 import MenuContext from "../assets/js/context";
@@ -16,10 +16,14 @@ const SysSider = () => {
 
     const dispatch = useDispatch()
 
-    const { collapsed, setCollapsed } = useContext(MenuContext);
+    const {collapsed, setCollapsed} = useContext(MenuContext);
+
+    //  获取当前激活tab标签的key值
+    const activeKey = useSelector(state => state.menuInfo.menuInfo.activeKey)
 
     //  首页不需要权限配置,所以不用保存在数据库中动态获取,在此处定义首页的菜单对象
     const homeItem = {
+        key: '/home',
         label: '首页',
         path: '/home',
         realpath: 'Home',
@@ -41,10 +45,10 @@ const SysSider = () => {
     }
 
     const getItem = (items) => {
-        if (items && items.length > 0){
+        if (items && items.length > 0) {
             items.map(item => {
                 item.icon = <IconFont type={item.icon}/>
-                if (item.children && item.children.length > 0){
+                if (item.children && item.children.length > 0) {
                     getItem(item.children)
                 }
             })
@@ -76,7 +80,7 @@ const SysSider = () => {
     //  点击logo,收缩菜单
     const clickLogo = () => {
         setCollapsed(!collapsed)
-        if (!collapsed){
+        if (!collapsed) {
             setMenuStyle({width: '80px', height: 'calc(100vh - 64px)'})
         } else {
             setMenuStyle({width: '200px', height: 'calc(100vh - 64px)'})
@@ -90,12 +94,13 @@ const SysSider = () => {
     return (
         <>
             <div style={logoStyle} onClick={clickLogo}>
-                <Image src={Logo} height={40} preview={false} />
+                <Image src={Logo} height={40} preview={false}/>
             </div>
             <Menu
                 style={menuStyle}
                 onSelect={onClick}
-                defaultSelectedKeys={['1']}
+                selectedKeys={[activeKey]}
+                defaultOpenKeys={[activeKey]}
                 mode={"inline"}
                 items={items}
             />
