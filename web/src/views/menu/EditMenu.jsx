@@ -105,6 +105,7 @@ const EditUser = ({getList}) => {
                     <Button key={'reset'} onClick={() => form.resetFields()}>重置</Button>,
                     <Button key={'ok'} type={"primary"} loading={loading} onClick={() => form.submit()}>确认</Button>,
                 ]}
+                transitionName={'ant-fade'}
             >
                 <Form form={form} name={'editMenu'} onFinish={onFinish} autoComplete={'off'}>
                     <Form.Item name={'id'} hidden={true}>

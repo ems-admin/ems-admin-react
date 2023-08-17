@@ -83,6 +83,7 @@ const AuthorizeRole = () => {
                     <Button key={'cancel'} onClick={() => setOpenAuth(false)}>取消</Button>,
                     <Button key={'ok'} type={"primary"} loading={loading} onClick={AuthRole}>授权</Button>
                 ]}
+                transitionName={'ant-fade'}
             >
                 {
                     treeData && treeData.length > 0 ? (<Tree
