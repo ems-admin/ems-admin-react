@@ -12,7 +12,7 @@ const SysSider = () => {
 
     const [items, setItems] = useState([])
 
-    const [menuStyle, setMenuStyle] = useState({width: '200px'})
+    const [menuStyle, setMenuStyle] = useState({width: '200px', height: 'calc(100vh - 64px)'})
 
     const dispatch = useDispatch()
 
@@ -77,9 +77,9 @@ const SysSider = () => {
     const clickLogo = () => {
         setCollapsed(!collapsed)
         if (!collapsed){
-            setMenuStyle({width: '80px'})
+            setMenuStyle({width: '80px', height: 'calc(100vh - 64px)'})
         } else {
-            setMenuStyle({width: '200px'})
+            setMenuStyle({width: '200px', height: 'calc(100vh - 64px)'})
         }
     }
 
