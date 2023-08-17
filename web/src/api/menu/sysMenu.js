@@ -68,3 +68,10 @@ export function getPermission(){
         method: 'get'
     })
 }
+
+export function getMenuTreeSelect(){
+    return request({
+        url: '/api/sys/menu/select',
+        method: 'get'
+    })
+}

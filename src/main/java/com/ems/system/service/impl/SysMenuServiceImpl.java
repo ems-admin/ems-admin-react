@@ -79,7 +79,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         //  获取最上级菜单
         List<SysMenu> topList = menuListAll.stream().filter(item -> item.getParentId() == 0L).collect(Collectors.toList());
         //  如果最上级菜单不为空
-        return getObjects(menuListAll, jsonArray, topList);
+        return getObjects(menuListAll, jsonArray, topList, "left");
     }
 
     /**
@@ -89,26 +89,28 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     * @Author: starao
     * @Date: 2022/10/2
     */
-    private JSONArray getObjects(List<SysMenu> menuListAll, JSONArray jsonArray, List<SysMenu> topList) {
+    private JSONArray getObjects(List<SysMenu> menuListAll, JSONArray jsonArray, List<SysMenu> topList, String type) {
         if (!CollectionUtils.isEmpty(topList)){
             //  组装菜单树
             for (SysMenu sysMenu : topList) {
                 JSONObject jsonObject = new JSONObject();
-//                jsonObject.put("id", sysMenu.getId());
-//                jsonObject.put("parentId", sysMenu.getParentId());
-//                jsonObject.put("name", sysMenu.getName());
-//                jsonObject.put("path", sysMenu.getPath());
-//                jsonObject.put("icon", sysMenu.getIcon());
-//                jsonObject.put("sort", sysMenu.getSort());
-                jsonObject.put("realpath", sysMenu.getComponent());
-//                jsonObject.put("permission", sysMenu.getPermission());
-//                jsonObject.put("type", sysMenu.getType());
-                jsonObject.put("label", sysMenu.getName());
-//                jsonObject.put("icon", sysMenu.getIcon());
-                jsonObject.put("key", sysMenu.getId());
                 jsonObject.put("path", sysMenu.getPath());
-                if (!CollectionUtils.isEmpty(getChildById(menuListAll, sysMenu.getId()))){
-                    jsonObject.put("children", getChildById(menuListAll, sysMenu.getId()));
+                jsonObject.put("realpath", sysMenu.getComponent());
+                if ("left".equals(type)){
+                    jsonObject.put("label", sysMenu.getName());
+                    jsonObject.put("icon", sysMenu.getIcon());
+                    jsonObject.put("key", sysMenu.getId());
+                } else {
+                    jsonObject.put("parentId", sysMenu.getParentId());
+                    jsonObject.put("sort", sysMenu.getSort());
+                    jsonObject.put("permission", sysMenu.getPermission());
+                    jsonObject.put("type", sysMenu.getType());
+                    jsonObject.put("name", sysMenu.getName());
+                    jsonObject.put("icon", sysMenu.getIcon());
+                    jsonObject.put("id", sysMenu.getId());
+                }
+                if (!CollectionUtils.isEmpty(getChildById(menuListAll, sysMenu.getId(), type))){
+                    jsonObject.put("children", getChildById(menuListAll, sysMenu.getId(), type));
                 }
 
                 jsonArray.add(jsonObject);
@@ -124,10 +126,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     * @Author: starao
     * @Date: 2022/10/1
     */
-    private JSONArray getChildById(List<SysMenu> menuList, long parentId){
+    private JSONArray getChildById(List<SysMenu> menuList, long parentId, String type){
         JSONArray jsonArray = new JSONArray();
         List<SysMenu> children = menuList.stream().filter(item -> item.getParentId().equals(parentId)).collect(Collectors.toList());
-        return getObjects(menuList, jsonArray, children);
+        return getObjects(menuList, jsonArray, children, type);
     }
 
     /**
@@ -198,7 +200,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         wrapper.orderByAsc(SysMenu::getSort);
         List<SysMenu> list = menuMapper.selectList(wrapper);
         List<SysMenu> topList = list.stream().filter(item -> item.getParentId() == 0L).collect(Collectors.toList());
-        return getObjects(list, jsonArray, topList);
+        return getObjects(list, jsonArray, topList, null);
     }
 
     /**
@@ -237,6 +239,31 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     /**
+     * @Description: 获取菜单下拉树
+     * @Param: []
+     * @return: com.alibaba.fastjson.JSONArray
+     * @Author: starao
+     * @Date: 2023/8/15
+     */
+    @Override
+    public JSONArray getMenuTreeSelect() {
+        JSONArray menuArray = getMenuTree(SecurityUtil.getCurrentRoles());
+        JSONArray children = new JSONArray();
+        if (!CollectionUtils.isEmpty(menuArray)){
+            for (int i = 0; i < menuArray.size(); i++) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("value", menuArray.getJSONObject(i).getLongValue("key"));
+                jsonObject.put("label", menuArray.getJSONObject(i).getString("label"));
+                if (menuArray.getJSONObject(i).getJSONArray("children") != null){
+                    jsonObject.put("children", getTreeChildren(menuArray.getJSONObject(i).getJSONArray("children")));
+                }
+                children.add(jsonObject);
+            }
+        }
+        return children;
+    }
+
+    /**
     * @Description: 校验菜单是否已绑定角色
     * @Param: [menuId]
     * @return: void
@@ -268,5 +295,26 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                 getAllMenusByChildId(sysMenu.getParentId(), list);
             }
         }
+    }
+
+    /**
+     * @Description: 获取下拉树子集
+     * @Param: [jsonArray]
+     * @return: com.alibaba.fastjson.JSONArray
+     * @Author: starao
+     * @Date: 2022/11/9
+     */
+    private JSONArray getTreeChildren(JSONArray jsonArray){
+        JSONArray children = new JSONArray();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("value", jsonArray.getJSONObject(i).getLongValue("key"));
+            jsonObject.put("label", jsonArray.getJSONObject(i).getString("label"));
+            if (jsonArray.getJSONObject(i).getJSONArray("children") != null){
+                jsonObject.put("children", jsonArray.getJSONObject(i).getJSONArray("children"));
+            }
+            children.add(jsonObject);
+        }
+        return children;
     }
 }

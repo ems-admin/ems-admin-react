@@ -127,7 +127,7 @@ const Index = () => {
                 <Input
                     className={'search-input'}
                     value={blurry}
-                    placeholder={'请输入用户名或昵称'}
+                    placeholder={'请输入角色名称或代码'}
                     onChange={changeValue}
                     allowClear={true}
                 ></Input>

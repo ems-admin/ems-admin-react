@@ -90,7 +90,8 @@ const AuthorizeRole = () => {
                         defaultExpandAll={true}
                         treeData={treeData}
                         fieldNames={{
-                            title: 'label'
+                            title: 'name',
+                            key: 'id'
                         }}
                         defaultCheckedKeys={checkedKeys}
                         onCheck={onCheck}

@@ -62,7 +62,7 @@ const EditUser = ({getList}) => {
                     <Button key={'ok'} type={"primary"} loading={loading} onClick={() => form.submit()}>确认</Button>,
                 ]}
             >
-                <Form form={form} name={'ediRole'} onFinish={onFinish} autoComplete={'off'}>
+                <Form form={form} name={'editRole'} onFinish={onFinish} autoComplete={'off'}>
                     <Form.Item name={'id'} hidden={true}>
                         <Input></Input>
                     </Form.Item>

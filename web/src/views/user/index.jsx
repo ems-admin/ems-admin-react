@@ -174,14 +174,13 @@ const Index = () => {
                 bordered
                 pagination={false}
             ></Table>
-
-            <ModalContext.Provider value={{openModal, setOpenModal, userObj,
-                pageSize, setPageSize, currentPage, setCurrentPage, total, setTotal}}>
-                {/*分页*/}
+            {/*分页*/}
+            <ModalContext.Provider value={{pageSize, setPageSize, currentPage, setCurrentPage, total, setTotal}}>
                 <MyPagination getList={handleChild}></MyPagination>
-                {/*编辑Modal*/}
+            </ModalContext.Provider>
+            {/*编辑Modal*/}
+            <ModalContext.Provider value={{openModal, setOpenModal, userObj}}>
                 <EditUser getList={handleChild}></EditUser>
-
             </ModalContext.Provider>
         </>
     )

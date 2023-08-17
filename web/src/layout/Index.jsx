@@ -14,15 +14,15 @@ const siderStyle = {
 const Index = () => {
     const [ collapsed, setCollapsed ] = useState(false)
 
-    const handleChildValue = useCallback((newValue) => {
-        setCollapsed(newValue)
-    }, [])
+    // const handleChildValue = useCallback((newValue) => {
+    //     setCollapsed(newValue)
+    // }, [])
 
     return(
         <Layout>
             <Sider style={siderStyle} collapsed={collapsed}>
-                <MenuContext.Provider value={{ collapsed }}>
-                    <SysSider handleValueChange={handleChildValue}/>
+                <MenuContext.Provider value={{ collapsed, setCollapsed }}>
+                    <SysSider/>
                 </MenuContext.Provider>
             </Sider>
             <Layout>

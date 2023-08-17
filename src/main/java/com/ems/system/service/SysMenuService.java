@@ -76,4 +76,13 @@ public interface SysMenuService extends IService<SysMenu> {
     * @Date: 2022/10/6
     */
     List<String> getPermission();
+
+    /**
+    * @Description: 获取菜单下拉树
+    * @Param: []
+    * @return: com.alibaba.fastjson.JSONArray
+    * @Author: starao
+    * @Date: 2023/8/15
+    */
+    JSONArray getMenuTreeSelect();
 }
