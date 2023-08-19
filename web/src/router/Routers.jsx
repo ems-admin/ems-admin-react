@@ -9,8 +9,6 @@ import {useSelector} from "react-redux";
 // 自定义的路由拦截组件
 const PrivateRoute = ({ path, element }) => {
 
-    console.info('路径:' + path)
-
     const token = useSelector(state => state.userInfo.userInfo.token)
     //  如果token存在
     const isAuthenticated = token !== null && token !== undefined;

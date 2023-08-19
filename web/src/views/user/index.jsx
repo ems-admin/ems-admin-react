@@ -3,7 +3,6 @@ import {useCallback, useEffect, useState} from "react";
 import {delUser, enabledUser, getUserList} from "../../api/user/sysUser";
 import {errorMsg, infoMsg, successMsg} from "../../assets/js/message";
 import ModalContext from "../../assets/js/context";
-import PageContext from "../../assets/js/context";
 import EditUser from "./EditUser";
 import MyPagination from "../../components/MyPagination";
 
@@ -29,53 +28,8 @@ const Index = () => {
     //  每页条数
     const [pageSize, setPageSize] = useState(10)
 
-    //  定义列
-    const columns = [
-        {
-            key: 'id',
-            title: '用户名',
-            dataIndex: 'username'
-        },
-        {
-            key: 'id',
-            title: '昵称',
-            dataIndex: 'nickName'
-        },
-        {
-            key: 'id',
-            title: '角色',
-            dataIndex: 'roles'
-        },
-        {
-            key: 'id',
-            title: '状态',
-            dataIndex: 'enabled',
-            render: (enabled, record) => {
-                return <Switch checkedChildren={'启用'} unCheckedChildren={'停用'} defaultChecked={enabled}
-                               onChange={(checked => changeStatus(checked, record))}/>
-            }
-        },
-        {
-            key: 'operate',
-            title: '操作',
-            dataIndex: 'operate',
-            align: 'center',
-            render: (_, record) => {
-                return <>
-                    <Button type={"primary"} size={"small"}
-                            onClick={() => editUser(JSON.parse(JSON.stringify(record)))}>编辑</Button>
-                    <Button type={"primary"} size={"small"} danger onClick={() => deleteUser(record.id)}>删除</Button>
-                </>
-
-            },
-            width: 200
-        }
-    ]
-
     //  获取用户列表
     const getUserTable = () => {
-        console.info('pageSize: ' + pageSize)
-        console.info('currentPage: ' + currentPage)
         const params = {
             blurry: blurry,
             size: pageSize,
@@ -134,7 +88,8 @@ const Index = () => {
             },
             onCancel() {
                 infoMsg('操作已取消')
-            }
+            },
+            transitionName: 'ant-fade'
         })
     }
 
@@ -169,11 +124,24 @@ const Index = () => {
             <Table
                 className={'page-table'}
                 dataSource={dataSource}
-                columns={columns}
                 rowKey={'id'}
                 bordered
                 pagination={false}
-            ></Table>
+            >
+                <column key={'username'} title={'用户名'} dataIndex={'username'}></column>
+                <column key={'nickName'} title={'昵称'} dataIndex={'nickName'}></column>
+                <column key={'roles'} title={'角色'} dataIndex={'roles'}></column>
+                <column key={'enabled'} title={'状态'} dataIndex={'enabled'} render={(_, record) => (
+                    <Switch checkedChildren={'启用'} unCheckedChildren={'停用'} defaultChecked={record.enabled}
+                            onChange={(checked => changeStatus(checked, record))}/>
+                )}></column>
+                <column key={'operate'} title={'操作'} dataIndex={'operate'} width={150} align={'center'}
+                    render={(_, record) => (<>
+                        <Button type={"primary"} onClick={() => editUser(JSON.parse(JSON.stringify(record)))}>编辑</Button>
+                        <Button type={"primary"} size={"small"} danger onClick={() => deleteUser(record.id)}>删除</Button>
+                    </>
+                )}></column>
+            </Table>
             {/*分页*/}
             <ModalContext.Provider value={{pageSize, setPageSize, currentPage, setCurrentPage, total, setTotal}}>
                 <MyPagination getList={handleChild}></MyPagination>

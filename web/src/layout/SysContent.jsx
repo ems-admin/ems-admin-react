@@ -13,7 +13,6 @@ const SysContent = () => {
 
     //  深拷贝已打开的菜单,避免修改里面children的时候,将缓存中的值一起修改了
     const newItems = JSON.parse(JSON.stringify(items))
-    console.info(newItems)
 
     //  定义dispatch用来修改缓存中的方法
     const dispatch = useDispatch()

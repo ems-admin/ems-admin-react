@@ -26,7 +26,6 @@ const EditUser = ({getList}) => {
         setRoleIds([])
         form.resetFields()
         if (open && userObj && userObj.id) {
-            console.info(userObj)
             setTitle('编辑用户')
             //  获取角色ID数组字符串
             const roleIdStr = userObj.roleIds[0]

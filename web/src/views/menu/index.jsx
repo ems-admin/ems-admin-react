@@ -66,7 +66,8 @@ const Index = () => {
             },
             onCancel(){
                 infoMsg('操作已取消')
-            }
+            },
+            transitionName: 'ant-fade'
         })
     }
 

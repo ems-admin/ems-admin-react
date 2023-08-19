@@ -36,7 +36,6 @@ const SysSider = () => {
             if (res.success) {
                 getItem(res.data)
                 res.data.unshift(homeItem)
-                console.info(res.data)
                 setItems(res.data)
             } else {
                 errorMsg(res.msg)

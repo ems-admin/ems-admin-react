@@ -26,40 +26,6 @@ const Index = () => {
     //  定义当前角色ID,作为传入子组件的变量
     const [roleId, setRoleId] = useState(null)
 
-    //  定义列
-    const columns = [
-        {
-            key: 'id',
-            title: '角色名称',
-            dataIndex: 'roleName'
-        },
-        {
-            key: 'id',
-            title: '角色代码',
-            dataIndex: 'roleCode'
-        },
-        {
-            key: 'id',
-            title: '角色说明',
-            dataIndex: 'description'
-        },
-        {
-            key: 'operate',
-            title: '操作',
-            dataIndex: 'operate',
-            align: 'center',
-            render: (_, record) => {
-                return <>
-                    <Button className={'success'} onClick={() => authorizeRole(record.id)}>授权</Button>
-                    <Button type={"primary"} onClick={() => editRole(JSON.parse(JSON.stringify(record)))}>编辑</Button>
-                    <Button type={"primary"} danger onClick={() => deleteRole(record.id)}>删除</Button>
-                </>
-
-            },
-            width: 200
-        }
-    ]
-
     //  获取用户列表
     const getRoleTable = () => {
         getRoleList({blurry: blurry}).then(res => {
@@ -113,7 +79,8 @@ const Index = () => {
             },
             onCancel(){
                 infoMsg('操作已取消')
-            }
+            },
+            transitionName: 'ant-fade'
         })
     }
 
@@ -143,11 +110,22 @@ const Index = () => {
             <Table
                 className={'no-page-table'}
                 dataSource={dataSource}
-                columns={columns}
                 rowKey={'id'}
                 bordered
                 pagination={false}
-            ></Table>
+            >
+                <column key={'roleName'} title={'角色名称'} dataIndex={'roleName'}></column>
+                <column key={'roleCode'} title={'角色代码'} dataIndex={'roleCode'}></column>
+                <column key={'description'} title={'角色说明'} dataIndex={'description'}></column>
+                <column key={'operate'} title={'操作'} dataIndex={'operate'} width={240} align={'center'}
+                        render={(_, record) => (
+                            <>
+                                <Button className={'success'} onClick={() => authorizeRole(record.id)}>授权</Button>
+                                <Button type={"primary"} onClick={() => editRole(JSON.parse(JSON.stringify(record)))}>编辑</Button>
+                                <Button type={"primary"} danger onClick={() => deleteRole(record.id)}>删除</Button>
+                            </>
+                        )}></column>
+            </Table>
 
             {/*角色编辑页面*/}
             <ModalContext.Provider value={{openEdit, setOpenEdit, roleObj}}>
