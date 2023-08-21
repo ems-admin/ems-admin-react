@@ -74,7 +74,8 @@ const SysSider = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        backgroundColor: '#545C64'
     }
 
     //  点击logo,收缩菜单

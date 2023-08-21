@@ -51,10 +51,18 @@
  */
 .page-table .ant-table-container{
     height: calc(100vh - 200px);
+    border-inline-end-color: rgb(52,57,59);
+    border-inline-end: 1px solid #f0f0f0;
+    border-bottom-color: rgb(52,57,59);
+    border-bottom: 1px solid #f0f0f0;
 }
 /**
 默认配置全局不带分页table高度
  */
 .no-page-table .ant-table-container{
     height: calc(100vh - 180px);
+    border-inline-end-color: rgb(52,57,59);
+    border-inline-end: 1px solid #f0f0f0;
+    border-bottom-color: rgb(52,57,59);
+    border-bottom: 1px solid #f0f0f0;
 }
