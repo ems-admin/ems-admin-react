@@ -2,6 +2,7 @@ import {Tabs} from "antd";
 import {useSelector, useDispatch} from "react-redux";
 import {removeTab, updateActiveKey} from "../store/menuRedux";
 import {lazy, Suspense} from "react";
+import '../assets/css/Tabs.css'
 
 const SysContent = () => {
 
@@ -22,8 +23,10 @@ const SysContent = () => {
 
     //  获取当前对象
     const currentItem = newItems.find(item => item.key === activeKey)
+
     //  组装获取的modules的key值
     const moduleKey = '../views/' + currentItem.realpath + '.jsx'
+
     if (currentItem){
         //  将当前对象中的组件路径加载为组件
         const MyComponent = lazy(modules[moduleKey]);

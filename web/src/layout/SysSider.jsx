@@ -7,6 +7,7 @@ import {updateActiveKey, updateOpenTabs} from "../store/menuRedux";
 import Logo from '../assets/image/ems.png'
 import MenuContext from "../assets/js/context";
 import IconFont from "../components/IconFont";
+import '../assets/css/Menu.css'
 
 const SysSider = () => {
 

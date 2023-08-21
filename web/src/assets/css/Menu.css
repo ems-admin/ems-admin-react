@@ -1,0 +1,14 @@
+.ant-menu-light{
+    background-color: rgb(84, 92, 100);
+    color: rgba(255, 255, 255, 0.88);
+    --darkreader-inline-bgcolor: #454b4e
+}
+
+.ant-menu-light .ant-menu-item-selected{
+    background-color: transparent;
+    color: #409eff;
+}
+
+.ant-menu-light .ant-menu-submenu-selected >.ant-menu-submenu-title{
+    color: #409eff;
+}
