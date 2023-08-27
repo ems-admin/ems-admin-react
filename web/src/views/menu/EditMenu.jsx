@@ -113,7 +113,7 @@ const EditUser = ({getList}) => {
                     </Form.Item>
                     <Row gutter={20}>
                         <Col span={16}>
-                            <Form.Item name={'parentId'} label={'上级目录'} rules={[{required: true, message: '上级目录不能为空'}]}>
+                            <Form.Item name={'parentId'} label={'上级目录'} rules={[{required: true}]}>
                                 <TreeSelect
                                     treeData={treeData}
                                     defaultValue={defaultValue}>
@@ -121,28 +121,28 @@ const EditUser = ({getList}) => {
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item name={'sort'} label={'排序'} rules={[{required: true, message: '排序不能为空'}]}>
+                            <Form.Item name={'sort'} label={'排序'} rules={[{required: true}]}>
                                 <Input placeholder={'请输入菜单排序'}></Input>
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Form.Item name={'type'} label={'菜单类型'} rules={[{required: true, message: '菜单类型不能为空'}]}>
+                    <Form.Item name={'type'} label={'菜单类型'} rules={[{required: true}]}>
                         <Radio.Group defaultValue={'1'} onChange={changeType}>
                             <Radio value={'1'}>菜单</Radio>
                             <Radio value={'2'}>页面</Radio>
                             <Radio value={'3'}>按钮</Radio>
                         </Radio.Group>
                     </Form.Item>
-                    <Form.Item name={'name'} label={'菜单名称'} rules={[{required: true, message: '菜单名称不能为空'}]}>
+                    <Form.Item name={'name'} label={'菜单名称'} rules={[{required: true}]}>
                         <Input placeholder={'请输入菜单名称'}></Input>
                     </Form.Item>
-                    {(isPage || isButton) && <Form.Item name={'path'} label={'访问路径'} rules={[{required: true, message: '访问路径不能为空'}]}>
+                    {(isPage || isButton) && <Form.Item name={'path'} label={'访问路径'} rules={[{required: true}]}>
                         <Input placeholder={'请输入访问路径'}></Input>
                     </Form.Item>}
-                    {isPage && <Form.Item name={'component'} label={'组件路径'} rules={[{required: true, message: '组件路径不能为空'}]}>
+                    {isPage && <Form.Item name={'component'} label={'组件路径'} rules={[{required: true}]}>
                         <Input placeholder={'请输入component'}></Input>
                     </Form.Item>}
-                    {isButton && <Form.Item name={'permission'} label={'按钮权限'} rules={[{required: true, message: '按钮权限不能为空'}]}>
+                    {isButton && <Form.Item name={'permission'} label={'按钮权限'} rules={[{required: true}]}>
                         <Input placeholder={'请输入按钮权限'}></Input>
                     </Form.Item>}
                 </Form>

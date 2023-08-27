@@ -67,13 +67,13 @@ const EditUser = ({getList}) => {
                     <Form.Item name={'id'} hidden={true}>
                         <Input></Input>
                     </Form.Item>
-                    <Form.Item name={'roleName'} label={'角色名称'} rules={[{required: true, message: '角色名称不能为空'}]}>
+                    <Form.Item name={'roleName'} label={'角色名称'} rules={[{required: true}]}>
                         <Input placeholder={'请输入角色名称'}></Input>
                     </Form.Item>
-                    <Form.Item name={'roleCode'} label={'角色代码'} rules={[{required: true, message: '角色代码不能为空'}]}>
+                    <Form.Item name={'roleCode'} label={'角色代码'} rules={[{required: true}]}>
                         <Input placeholder={'请输入角色代码'}></Input>
                     </Form.Item>
-                    <Form.Item name={'description'} label={'角色说明'} rules={[{required: true, message: '角色说明不能为空'}]}>
+                    <Form.Item name={'description'} label={'角色说明'} rules={[{required: true}]}>
                         <TextArea rows={5} placeholder={'请输入角色说明'}></TextArea>
                     </Form.Item>
                 </Form>

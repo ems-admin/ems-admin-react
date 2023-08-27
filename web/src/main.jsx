@@ -10,12 +10,16 @@ import {ConfigProvider} from "antd";
 
 let persistor = persistStore(store);
 
+const validateMessages = {
+    required: "${label}不能为空",
+};
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
       <BrowserRouter>
           <Provider store={store}>
             <PersistGate loading={'程序加载中...'} persistor={persistor}>
-                <ConfigProvider componentSize={'small'}>
+                <ConfigProvider componentSize={'small'} form={{validateMessages}}>
                     <App />
                 </ConfigProvider>
             </PersistGate>

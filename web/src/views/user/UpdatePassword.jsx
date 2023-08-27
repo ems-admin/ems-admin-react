@@ -77,7 +77,7 @@ const UpdatePassword = ({out}) => {
                 transitionName={'ant-fade'}
             >
                 <Form form={form} name={'updatePassword'} onFinish={onFinish} autoComplete={'off'} labelCol={{span: 3}}>
-                    <Form.Item name={'password'} label={'原密码'} rules={[{required: true, message: '原密码不能为空'}]}>
+                    <Form.Item name={'password'} label={'原密码'} rules={[{required: true}]}>
                         <Input type={"password"} placeholder={'请输入原密码'}></Input>
                     </Form.Item>
                     <Form.Item name={'newPassword'} label={'新密码'}
