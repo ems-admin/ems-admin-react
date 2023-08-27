@@ -118,7 +118,7 @@ public class SysUserController extends ResultUtil {
             return success(true, "修改成功");
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, "修改失败");
+            return fail(false, e.getMsg());
         }
     }
 }

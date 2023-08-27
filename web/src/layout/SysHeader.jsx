@@ -1,18 +1,32 @@
 import React, {useState} from "react";
-import {Button, Dropdown, Space} from "antd";
+import {Button, Dropdown, Modal, Space} from "antd";
 import store from "../store/store";
 import '../assets/css/Header.css'
 import {DownOutlined} from "@ant-design/icons";
+import ModalContext from "../assets/js/context";
+import UpdatePassword from '../views/user/UpdatePassword'
+import {useDispatch} from "react-redux";
+import {updateToken} from "../store/userRedux";
+import {useNavigate} from "react-router-dom";
+import {delUser} from "../api/user/sysUser";
+import {errorMsg, infoMsg, successMsg} from "../assets/js/message";
 
 const SysHeader = () => {
 
     //  当前登录用户昵称
-    const nickName = store.getState().userInfo.userInfo.info.nickName
+    const nickName = store.getState().userInfo.userInfo.info ==  null ? '' : store.getState().userInfo.userInfo.info.nickName
+
+    const dispatch = useDispatch()
+
+    const navigate = useNavigate();
+
+    //  修改密码
+    const [openModal, setOpenModal] = useState(false)
 
     const items = [
         {
             label: (
-                <Button type={"link"}>修改密码</Button>
+                <Button type={"link"} onClick={() => setOpenModal(true)}>修改密码</Button>
             ),
             key: '1',
         },
@@ -21,11 +35,36 @@ const SysHeader = () => {
         },
         {
             label: (
-                <Button type={"link"}>退出登录</Button>
+                <Button type={"link"} onClick={() => logout()}>退出登录</Button>
             ),
             key: '2',
         },
     ]
+
+    const {confirm} = Modal
+    //  退出登录
+    const logout = () => {
+        confirm({
+            title: '退出登录',
+            content: '确认退出当前登录?',
+            okText: '确认',
+            cancelText: '取消',
+            onOk() {
+                out()
+            },
+            onCancel() {
+                infoMsg('操作已取消')
+            },
+            transitionName: 'ant-fade'
+        })
+    }
+    //  退出操作
+    const out = () => {
+        //  清空token
+        dispatch(updateToken(null))
+        //  跳转到登录页面
+        navigate('/login', { replace: true });
+    }
 
     return (
         <>
@@ -46,6 +85,10 @@ const SysHeader = () => {
                     </Dropdown>
                 </div>
             </div>
+            {/*修改密码*/}
+            <ModalContext.Provider value={{openModal, setOpenModal}}>
+                <UpdatePassword out={out}></UpdatePassword>
+            </ModalContext.Provider>
         </>
     )
 }
