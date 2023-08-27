@@ -72,7 +72,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 //  放行请求
                 filterChain.doFilter(request, response);
             }
-        } catch (BadRequestException e) {
+        } catch (Exception e) {
             //  token问题,统一作401处理
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }

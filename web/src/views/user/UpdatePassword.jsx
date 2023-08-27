@@ -1,7 +1,7 @@
 import {Button, Form, Input, Modal, Select} from "antd";
 import {useContext, useState} from "react";
 import ModalContext from "../../assets/js/context";
-import {editUser, updatePwd} from "../../api/user/sysUser";
+import {updatePwd} from "../../api/user/sysUser";
 import {errorMsg, successMsg} from "../../assets/js/message";
 
 const UpdatePassword = ({out}) => {

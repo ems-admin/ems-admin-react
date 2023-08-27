@@ -8,8 +8,7 @@ import UpdatePassword from '../views/user/UpdatePassword'
 import {useDispatch} from "react-redux";
 import {updateToken} from "../store/userRedux";
 import {useNavigate} from "react-router-dom";
-import {delUser} from "../api/user/sysUser";
-import {errorMsg, infoMsg, successMsg} from "../assets/js/message";
+import {infoMsg} from "../assets/js/message";
 
 const SysHeader = () => {
 

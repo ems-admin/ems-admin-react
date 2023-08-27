@@ -1,6 +1,8 @@
 import axios from "axios";
 import store from '../../store/store'
 import {errorMsg} from "./message";
+import {updateRefreshToken, updateToken} from "../../store/userRedux";
+
 //  创建axios实例
 const instance = axios.create({
     baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_URL : '/',
@@ -45,23 +47,18 @@ instance.interceptors.response.use(
             if (code){
                 //  如果是未授权
                 if (code === 401){
-                    // //  说明token过期，使用refreshToken对当前token进行刷新
-                    // const refresh = store.state.refreshToken
-                    // //  如果存在
-                    // if (refresh){
-                    //     return againRequest(refresh, error)
-                    // //  否则
-                    // } else {
-                    //     //  清空token
-                    //     store.dispatch('tokenAction', null)
-                    //     //  并跳转到登录页面，进行重新登录
-                    //     routers.push({
-                    //         path: '/login',
-                    //         query: {
-                    //             backto: routers.currentRoute.fullPath
-                    //         }
-                    //     })
-                    // }
+                    //  说明token过期，使用refreshToken对当前token进行刷新
+                    const refresh = store.getState().userInfo.userInfo.refreshToken
+                    //  如果存在
+                    if (refresh){
+                        return againRequest(refresh, error)
+                    //  否则
+                    } else {
+                        //  清空token
+                        store.dispatch(updateToken(null))
+                        //  并跳转到登录页面，进行重新登录
+                        this.props.history.push('/login')
+                    }
                     //  如果是没有权限
                 } else if (code === 403){
                     //  直接跳转至401页面
@@ -86,37 +83,40 @@ instance.interceptors.response.use(
  * @param error
  * @returns {Promise<void>}
  */
-// async function againRequest(refresh, error){
-//     await refreshToken(refresh)
-//     const config = error.response.config
-//     config.headers['Authorization'] = 'Bearer ' + store.state.token
-//     const res = await axios.request(config)
-//     return res.data
-// }
+async function againRequest(refresh, error){
+    await refreshToken(refresh)
+    const config = error.response.config
+    config.headers['Authorization'] = 'Bearer ' + store.getState().userInfo.userInfo.token
+    const res = await axios.request(config)
+    return res.data
+}
 
 /**
  * 刷新token
  * @param refresh
  * @param config
  */
-// export function refreshToken(refresh){
-//     //  刷新token
-//     return axios({
-//         url: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_URL : 'http://localhost:8415' + '/auth/refresh',
-//         method: 'put',
-//         headers: {
-//             Authorization: `Bearer ${refresh}`
-//         }
-//     }).then(res => {
-//         if (res.data.success){
-//             //  刷新token
-//             store.dispatch('tokenAction', res.data.data)
-//         } else {
-//             errorMsg(res.msg)
-//             //  清空token
-//             store.dispatch('tokenAction', null)
-//         }
-//     })
-// }
+function refreshToken(refresh){
+    //  刷新token
+    return axios({
+        url: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_URL : 'http://localhost:8415' + '/auth/refresh',
+        method: 'put',
+        headers: {
+            Authorization: `Bearer ${refresh}`
+        }
+    }).then(res => {
+        if (res.data.success){
+            //  刷新token
+            store.dispatch(updateToken(res.data.data))
+        } else {
+            errorMsg(res.msg)
+            //  清空token
+            store.dispatch(updateToken(null))
+        }
+    }).catch(() => {
+        //  如果刷新token失败,则直接清空refreshToken,避免重复请求
+        store.dispatch(updateRefreshToken(null))
+    })
+}
 
 export default instance
