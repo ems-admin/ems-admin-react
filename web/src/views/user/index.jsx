@@ -5,8 +5,6 @@ import {errorMsg, infoMsg, successMsg} from "../../assets/js/message";
 import ModalContext from "../../assets/js/context";
 import EditUser from "./EditUser";
 import MyPagination from "../../components/MyPagination";
-import {useDispatch} from "react-redux";
-import {updateRefreshToken, updateToken} from "../../store/userRedux";
 
 const Index = () => {
 
@@ -29,8 +27,6 @@ const Index = () => {
     const [currentPage, setCurrentPage] = useState(1)
     //  每页条数
     const [pageSize, setPageSize] = useState(10)
-
-    const dispatch = useDispatch()
 
     //  获取用户列表
     const getUserTable = () => {

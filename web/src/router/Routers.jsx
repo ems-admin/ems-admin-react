@@ -3,7 +3,6 @@ import {useEffect} from "react";
 import Index from "../layout";
 import Login from "../views/Login";
 import Home from "../views/Home";
-import User from '../views/user/index'
 import {useSelector} from "react-redux";
 
 // 自定义的路由拦截组件
@@ -23,6 +22,7 @@ const PrivateRoute = ({ path, element }) => {
             if (path === '/'){
                 navigate(-1)
             }
+            console.info(path)
             //  如果是重复登录,则跳转到主页
             if (path === '/login'){
                 navigate('/index')
@@ -30,7 +30,7 @@ const PrivateRoute = ({ path, element }) => {
                 console.info('后续处理')
             }
         }
-    })
+    }, [])
     return element;
 };
 
@@ -41,7 +41,7 @@ const routers = [
     },
     {
         path: '/login',
-        element: <Login></Login>
+        element: <PrivateRoute path={'/login'} element={<Login></Login>}></PrivateRoute>
     },
     {
         path: '/home',

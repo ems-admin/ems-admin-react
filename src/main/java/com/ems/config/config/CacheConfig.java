@@ -43,7 +43,9 @@ public class CacheConfig {
      * @param key
      */
     public void invalidate(String key){
-        cache.invalidate(key);
+        if (cache != null){
+            cache.invalidate(key);
+        }
     }
 
     /**
