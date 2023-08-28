@@ -7,6 +7,7 @@ import store from "./store/store";
 import {PersistGate} from 'redux-persist/integration/react'
 import {persistStore} from "redux-persist";
 import {ConfigProvider} from "antd";
+import './assets/css/Common.css'
 
 let persistor = persistStore(store);
 

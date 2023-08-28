@@ -4,6 +4,7 @@ import Index from "../layout";
 import Login from "../views/Login";
 import Home from "../views/Home";
 import {useSelector} from "react-redux";
+import NotFound from "../views/error/404";
 
 // 自定义的路由拦截组件
 const PrivateRoute = ({ path, element }) => {
@@ -22,12 +23,12 @@ const PrivateRoute = ({ path, element }) => {
             if (path === '/'){
                 navigate(-1)
             }
-            console.info(path)
             //  如果是重复登录,则跳转到主页
             if (path === '/login'){
                 navigate('/index')
+            //  如果是跳转到其他不存在的路由,跳转到404页面
             } else {
-                console.info('后续处理')
+                navigate('/*')
             }
         }
     }, [])
@@ -50,6 +51,10 @@ const routers = [
     {
         path: '/index',
         element: <PrivateRoute path={'/index'} element={<Index></Index>}></PrivateRoute>
+    },
+    {
+        path: '/*',
+        element: <PrivateRoute path={'/*'} element={<NotFound></NotFound>}></PrivateRoute>
     },
 
 ]
