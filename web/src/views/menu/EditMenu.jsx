@@ -1,8 +1,10 @@
-import {Button, Col, Form, Input, Modal, Radio, Row, TreeSelect} from "antd";
-import {useContext, useState} from "react";
+import {Button, Col, Dropdown, Form, Input, Modal, Radio, Row, Select, TreeSelect} from "antd";
+import React, {useContext, useState} from "react";
 import ModalContext from "../../assets/js/context";
 import {errorMsg, successMsg} from "../../assets/js/message";
 import {editMenu, getMenuTreeSelect} from "../../api/menu/sysMenu";
+import IconFont from "../../components/IconFont";
+import iconJson from '../../assets/iconfont/iconfont.json'
 
 const EditUser = ({getList}) => {
 
@@ -21,6 +23,8 @@ const EditUser = ({getList}) => {
     const [isPage, setIsPage] = useState(false)
 
     const [isButton, setIsButton] = useState(false)
+
+    const [iconList, setIconList] = useState([])
 
     //  打开后执行的操作
     const afterOpenModal = (open) => {
@@ -41,6 +45,7 @@ const EditUser = ({getList}) => {
                 form.setFieldsValue(menuObj)
             }
             getMenuTreeFun()
+            getIconList()
         }
     }
 
@@ -74,6 +79,38 @@ const EditUser = ({getList}) => {
             setIsButton(true)
         }
     }
+
+    //  获取图标列表
+    const getIconList = () => {
+        const iconPrefix = iconJson.css_prefix_text
+        const iconClassList = JSON.parse(JSON.stringify(iconJson.glyphs))
+        const iconTypes = iconClassList.map(item => {
+            item.font_class = iconPrefix + item.font_class
+            return item
+        })
+        setIconList(iconTypes)
+    }
+
+    //  选中图标
+    const checkIcon = (icon) => {
+        form.setFieldValue('icon', icon)
+    }
+
+    //  图标列表
+    const items = [
+        {
+            icon: (
+                <Row gutter={10} style={{textAlign: "center"}}>
+                    {iconList.length > 0 && iconList.map((item, index) => (
+                        <Col span={8}>
+                            <IconFont key={index} type={item.font_class} style={{fontSize: '60px'}} onClick={() => checkIcon(item.font_class)}></IconFont>
+                        </Col>
+                    ))}
+                </Row>
+            ),
+            key: '1',
+        }
+    ]
 
     //  提交
     const onFinish = (values) => {
@@ -136,6 +173,11 @@ const EditUser = ({getList}) => {
                     <Form.Item name={'name'} label={'菜单名称'} rules={[{required: true}]}>
                         <Input placeholder={'请输入菜单名称'}></Input>
                     </Form.Item>
+                    <Dropdown menu={{items}} trigger={['click']}>
+                        <Form.Item name={'icon'} label={'菜单图标'}>
+                            <Input placeholder={'请选择图标'}></Input>
+                        </Form.Item>
+                    </Dropdown>
                     {(isPage || isButton) && <Form.Item name={'path'} label={'访问路径'} rules={[{required: true}]}>
                         <Input placeholder={'请输入访问路径'}></Input>
                     </Form.Item>}

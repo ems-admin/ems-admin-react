@@ -15,16 +15,16 @@ const PrivateRoute = ({ path, element }) => {
     const navigate = useNavigate();
     const match = useMatch(path);
     useEffect(() => {
+        console.info(path)
         if (!isAuthenticated && match) {
             // 如果用户未通过认证，并且匹配当前路由路径，则导航到登录页面
             navigate('/login', { replace: true });
         } else {
-            //  如果用户手动跳转根目录,则直接回退,避免路由跳出当面主页面
+            //  如果用户手动跳转根目录,则直接进入主页,避免路由跳出当面主页面
             if (path === '/'){
-                navigate(-1)
-            }
+                navigate('/index')
             //  如果是重复登录,则跳转到主页
-            if (path === '/login'){
+            } else if (path === '/login' || path === '/index'){
                 navigate('/index')
             //  如果是跳转到其他不存在的路由,跳转到404页面
             } else {
@@ -54,7 +54,7 @@ const routers = [
     },
     {
         path: '/*',
-        element: <PrivateRoute path={'/*'} element={<NotFound></NotFound>}></PrivateRoute>
+        element: <NotFound></NotFound>
     },
 
 ]

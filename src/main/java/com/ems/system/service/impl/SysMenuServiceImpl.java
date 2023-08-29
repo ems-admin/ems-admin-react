@@ -252,7 +252,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         if (!CollectionUtils.isEmpty(menuArray)){
             for (int i = 0; i < menuArray.size(); i++) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("value", menuArray.getJSONObject(i).getLongValue("key"));
+                jsonObject.put("value", menuArray.getJSONObject(i).getString("key"));
                 jsonObject.put("label", menuArray.getJSONObject(i).getString("label"));
                 if (menuArray.getJSONObject(i).getJSONArray("children") != null){
                     jsonObject.put("children", getTreeChildren(menuArray.getJSONObject(i).getJSONArray("children")));
@@ -308,7 +308,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         JSONArray children = new JSONArray();
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("value", jsonArray.getJSONObject(i).getLongValue("key"));
+            jsonObject.put("value", jsonArray.getJSONObject(i).getString("key"));
             jsonObject.put("label", jsonArray.getJSONObject(i).getString("label"));
             if (jsonArray.getJSONObject(i).getJSONArray("children") != null){
                 jsonObject.put("children", jsonArray.getJSONObject(i).getJSONArray("children"));

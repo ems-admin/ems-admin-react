@@ -31,6 +31,10 @@
     background: #52c41a;
 }
 
+.ant-form-item .ant-form-item-label{
+    width: 100px;
+}
+
 /**
 默认配置全局modal样式
  */
