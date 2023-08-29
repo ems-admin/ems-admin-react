@@ -9,10 +9,10 @@ JWT、React18.2、antd5进行开发，
 做到真正的开箱即用.
 
 
-[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/ems-admin/ems-vue2/blob/master/LICENSE)
-[![star](https://gitee.com/ems-admin/ems-vue2/badge/star.svg?theme=white)](https://gitee.com/ems-admin/ems-vue2)
-[![GitHub stars](https://img.shields.io/github/stars/ems-admin/ems-vue2.svg?style=social&label=Stars)](https://github.com/ems-admin/ems-vue2)
-[![GitHub forks](https://img.shields.io/github/forks/ems-admin/ems-vue2.svg?style=social&label=Fork)](https://github.com/ems-admin/ems-vue2)
+[![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/ems-admin/ems-react/blob/master/LICENSE)
+[![star](https://gitee.com/ems-admin/ems-admin-react/badge/star.svg?theme=white)](https://gitee.com/ems-admin/ems-admin-react)
+[![GitHub stars](https://img.shields.io/github/stars/ems-admin/ems-react.svg?style=social&label=Stars)](https://github.com/ems-admin/ems-react)
+[![GitHub forks](https://img.shields.io/github/forks/ems-admin/ems-react.svg?style=social&label=Fork)](https://github.com/ems-admin/ems-react)
 
 [ems-admin演示站点](http://ems.facebook47.cn/)
 
@@ -43,7 +43,7 @@ JWT、React18.2、antd5进行开发，
 - ems-admin交流群: ![Image](wechat.png)
 
 
-- [issues 问题反馈](https://github.com/ems-admin/ems-vue2/issues)
+- [issues 问题反馈](https://github.com/ems-admin/ems-react/issues)
 
 
 - [更新日志](CHANGELOG.md)
