@@ -2,13 +2,12 @@ package com.ems.common.exception;
 
 import com.ems.common.utils.ExceptionUtil;
 import com.ems.common.utils.ResultUtil;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- * @program: ems-vue2
+ * @program: ems-admin-react
  * @description: 配置全局异常处理
  * @author: starao
  * @create: 2023-07-04 21:18
