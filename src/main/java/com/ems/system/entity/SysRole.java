@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -47,6 +48,7 @@ public class SysRole extends BaseEntity implements Serializable {
      */
     private String description;
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

@@ -94,12 +94,11 @@ async function againRequest(refresh, error){
 /**
  * 刷新token
  * @param refresh
- * @param config
  */
 function refreshToken(refresh){
     //  刷新token
     return axios({
-        url: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_URL : 'http://localhost:8415' + '/auth/refresh',
+        url: '/auth/refresh',
         method: 'put',
         headers: {
             Authorization: `Bearer ${refresh}`

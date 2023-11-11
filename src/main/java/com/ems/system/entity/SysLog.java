@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -77,6 +78,7 @@ public class SysLog implements Serializable {
      */
     private String description;
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
