@@ -40,13 +40,16 @@ JWT、React18.2、antd5进行开发，
 
 #### 交流反馈
 
-- ems-admin交流群: ![Image](wechat.png)
-
 
 - [issues 问题反馈](https://github.com/ems-admin/ems-react/issues)
 
 
 - [更新日志](CHANGELOG.md)
+
+
+####  必应壁纸
+
+- 如果对必应壁纸感兴趣，可以访问 [必应壁纸](https://bing.fullpx.com)
 
 
 #### 软件架构

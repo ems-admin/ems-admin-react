@@ -2,10 +2,8 @@ package com.ems.config.filter;
 
 
 import com.ems.common.constant.SecurityConstants;
-import com.ems.common.exception.BadRequestException;
 import com.ems.common.utils.JwtUtil;
 import com.ems.common.utils.StringUtil;
-import com.ems.system.service.SysMenuService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -14,18 +12,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 /**

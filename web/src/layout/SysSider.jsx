@@ -98,6 +98,7 @@ const SysSider = () => {
                 <Image src={Logo} height={40} preview={false}/>
             </div>
             <Menu
+                theme="light"
                 style={menuStyle}
                 onSelect={onClick}
                 selectedKeys={[activeKey]}
