@@ -14,7 +14,7 @@ JWT、React19.0、antd5进行开发，
 [![GitHub stars](https://img.shields.io/github/stars/ems-admin/ems-react.svg?style=social&label=Stars)](https://github.com/ems-admin/ems-react)
 [![GitHub forks](https://img.shields.io/github/forks/ems-admin/ems-react.svg?style=social&label=Fork)](https://github.com/ems-admin/ems-react)
 
-[ems-admin演示站点](http://ems.facebook47.cn/)
+[ems-admin演示站点](http://ems.fullpx.com)
 
 #### 支持功能
 
