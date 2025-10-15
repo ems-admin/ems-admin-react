@@ -3,7 +3,7 @@ import SysSider from "./SysSider";
 import SysHeader from "./SysHeader";
 import SysContent from "./SysContent";
 const {Sider, Header, Content} = Layout
-import {useCallback, useState} from "react";
+import {useState} from "react";
 import MenuContext from "../assets/js/context";
 
 const siderStyle = {

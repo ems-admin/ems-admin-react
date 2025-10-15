@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {Button, Dropdown, Modal, Space} from "antd";
 import store from "../store/store";
 import '../assets/css/Header.css'
@@ -40,10 +40,10 @@ const SysHeader = () => {
         },
     ]
 
-    const {confirm} = Modal
+    const [modal, contextHolder] = Modal.useModal();
     //  退出登录
     const logout = () => {
-        confirm({
+        modal.confirm({
             title: '退出登录',
             content: '确认退出当前登录?',
             okText: '确认',
@@ -84,6 +84,7 @@ const SysHeader = () => {
                     </Dropdown>
                 </div>
             </div>
+            {contextHolder}
             {/*修改密码*/}
             <ModalContext.Provider value={{openModal, setOpenModal}}>
                 <UpdatePassword out={out}></UpdatePassword>

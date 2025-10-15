@@ -1,6 +1,6 @@
 import {Route, useMatch, useNavigate, Routes} from "react-router-dom";
 import {useEffect} from "react";
-import Index from "../layout";
+import Index from "../layout/Index.jsx";
 import Login from "../views/Login";
 import Home from "../views/Home";
 import {useSelector} from "react-redux";
