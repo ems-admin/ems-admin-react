@@ -55,6 +55,7 @@
  */
 .page-table .ant-table-container{
     height: calc(100vh - 200px);
+    overflow: auto;
     border-inline-end-color: rgb(52,57,59);
     border-inline-end: 1px solid #f0f0f0;
     border-bottom-color: rgb(52,57,59);
@@ -65,6 +66,7 @@
  */
 .no-page-table .ant-table-container{
     height: calc(100vh - 180px);
+    overflow-y: auto;
     border-inline-end-color: rgb(52,57,59);
     border-inline-end: 1px solid #f0f0f0;
     border-bottom-color: rgb(52,57,59);
