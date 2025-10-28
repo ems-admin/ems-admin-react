@@ -60,6 +60,7 @@ const SysSider = () => {
         const label = domEvent.target.innerHTML
         const path = item.props.path
         const realpath = item.props.realpath
+        console.log('点击了菜单', item)
         dispatch(updateActiveKey(path))
         dispatch(updateOpenTabs({
             label: label,

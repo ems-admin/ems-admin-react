@@ -58,7 +58,7 @@
     overflow: auto;
     border-inline-end-color: rgb(52,57,59);
     border-inline-end: 1px solid #f0f0f0;
-    border-bottom-color: rgb(52,57,59);
+    border-bottom-color: rgba(52,57,59,1);
     border-bottom: 1px solid #f0f0f0;
 }
 /**
