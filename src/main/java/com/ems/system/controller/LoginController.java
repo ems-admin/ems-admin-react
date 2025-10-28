@@ -14,8 +14,7 @@ import com.ems.system.entity.SysUser;
 import com.ems.system.entity.dto.UserDto;
 import com.ems.system.service.SysRoleService;
 import com.ems.system.service.SysUserService;
-import com.wf.captcha.ArithmeticCaptcha;
-import com.wf.captcha.base.Captcha;
+import com.pig4cloud.captcha.ArithmeticCaptcha;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -55,12 +54,12 @@ public class LoginController extends ResultUtil {
         try {
             //  校验验证码
             if (StringUtil.isBlank(userDto.getCode()) || !checkCode(userDto.getUuid(), userDto.getCode())){
-                return fail(false, "验证码错误");
+                return fail("验证码错误");
             }
             //  根据用户名查询用户是否存在
             SysUser user = userService.findByName(userDto.getUsername());
             if (user == null){
-                return fail(false, "用户名或密码错误");
+                return fail("用户名或密码错误");
             }
             //  判断密码是否正确
             UsernamePasswordAuthenticationToken authenticationToken =
@@ -82,10 +81,10 @@ public class LoginController extends ResultUtil {
             //  隐藏密码
             userDto.setPassword("******");
 
-            return success(true, new JwtUser(token, refreshToken, userDto));
+            return success(new JwtUser(token, refreshToken, userDto));
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 
@@ -101,10 +100,10 @@ public class LoginController extends ResultUtil {
     public ResponseEntity<Object> registerUser(@RequestBody UserDto userDto){
         try {
             userService.editUser(userDto);
-            return success(true, "注册成功");
+            return success("注册成功");
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
     
@@ -135,14 +134,14 @@ public class LoginController extends ResultUtil {
                     List<String> roles = getRolesByUserId(user.getId());
                     //  重新获取token
                     String token = JwtUtil.generateToken(user.getUsername(), roles, false);
-                    return success(true, token);
+                    return success(token);
                 }
             }
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
-        return fail(false, "请重新登录");
+        return fail("请重新登录");
     }
 
     /**
@@ -155,25 +154,26 @@ public class LoginController extends ResultUtil {
     @GetMapping("/code")
     public ResponseEntity<Object> getVerifyCode(){
         try {
-            // 获取运算的结果
-            Captcha captcha = new ArithmeticCaptcha(VerifyCodeConstants.width, VerifyCodeConstants.height);
-            String uuid = UUID.randomUUID().toString().replace("-", "");
-            //当验证码类型为 arithmetic时且长度 >= 2 时，captcha.text()的结果有几率为浮点型
+            // 创建一个宽120px、高40px的算术验证码
+            ArithmeticCaptcha captcha = new ArithmeticCaptcha(VerifyCodeConstants.width, VerifyCodeConstants.height);
+            // 参与运算的数字个数
+            captcha.setLen(2);
+            //  加减乘除
+            captcha.supportAlgorithmSign(5);
+            // 获取算术表达式的结果
             String captchaValue = captcha.text();
-            if (captchaValue.contains(".")) {
-                captchaValue = captchaValue.split("\\.")[0];
-            }
             // 缓存验证码信息,时间1分钟
+            String uuid = UUID.randomUUID().toString().replace("-", "");
             cacheConfig.put(uuid, captchaValue, 1);
             // 验证码信息
-            Map<String, Object> imgResult = new HashMap<String, Object>(2) {{
+            Map<String, Object> imgResult = new HashMap<>(2) {{
                 put("img", captcha.toBase64());
                 put("uuid", uuid);
             }};
             return ResponseEntity.ok(imgResult);
-        } catch (BadRequestException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMessage());
         }
     }
 

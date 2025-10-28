@@ -38,10 +38,10 @@ public class SysMenuController extends ResultUtil {
     public ResponseEntity<Object> getMenuTree(){
         try {
             List<String> roles = SecurityUtil.getCurrentRoles();
-            return success(true, menuService.getMenuTree(roles));
+            return success(menuService.getMenuTree(roles));
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 
@@ -56,10 +56,10 @@ public class SysMenuController extends ResultUtil {
     @GetMapping("/menu/permission")
     public ResponseEntity<Object> getPermission(){
         try {
-            return success(true, menuService.getPermission());
+            return success(menuService.getPermission());
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 
@@ -74,10 +74,10 @@ public class SysMenuController extends ResultUtil {
     public ResponseEntity<Object> queryAllMenus(){
         try {
             List<String> roles = SecurityUtil.getCurrentRoles();
-            return success(true, menuService.queryAllMenus(roles));
+            return success(menuService.queryAllMenus(roles));
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 
@@ -92,10 +92,10 @@ public class SysMenuController extends ResultUtil {
     @GetMapping("/menu/table")
     public ResponseEntity<Object> getMenuTable(String blurry){
         try {
-            return success(true, menuService.getMenuTable(blurry));
+            return success(menuService.getMenuTable(blurry));
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 
@@ -112,10 +112,10 @@ public class SysMenuController extends ResultUtil {
         try {
             String str = StringUtil.getEditType(sysMenu.getId());
             menuService.editMenu(sysMenu);
-            return success(true, str);
+            return success(str);
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 
@@ -131,10 +131,10 @@ public class SysMenuController extends ResultUtil {
     public ResponseEntity<Object> delMenu(Long id){
         try {
             menuService.delMenu(id);
-            return success(true, "删除成功");
+            return success("删除成功");
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 
@@ -142,10 +142,10 @@ public class SysMenuController extends ResultUtil {
     @GetMapping("/menu/select")
     public ResponseEntity<Object> getMenuTreeSelect(){
         try {
-            return success(true, menuService.getMenuTreeSelect());
+            return success(menuService.getMenuTreeSelect());
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 }

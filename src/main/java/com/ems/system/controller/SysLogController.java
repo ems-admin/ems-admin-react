@@ -33,10 +33,10 @@ public class SysLogController extends ResultUtil {
     @GetMapping("/log/list")
     public ResponseEntity<Object> getLogList(QueryDto queryDto, String logType){
         try {
-            return success(true, logService.getLogList(queryDto, logType));
+            return success(logService.getLogList(queryDto, logType));
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 }

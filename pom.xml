@@ -7,7 +7,7 @@
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>3.4.1</version>
+        <version>3.5.6</version>
     </parent>
 
     <groupId>com.ems</groupId>
@@ -16,15 +16,17 @@
 
     <!--版本管理-->
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <jwt-version>0.11.2</jwt-version>
-        <lombok-version>1.18.30</lombok-version>
-        <mysql-version>8.0.33</mysql-version>
-        <commons-version>3.12.0</commons-version>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        <jwt-version>0.13.0</jwt-version>
+        <lombok-version>1.18.42</lombok-version>
+        <mysql-version>9.4.0</mysql-version>
+        <commons-version>3.19.0</commons-version>
         <problem-version>0.25.2</problem-version>
-        <fastjson-version>2.0.53</fastjson-version>
-        <mybatis-plus-version>3.5.9</mybatis-plus-version>
+        <fastjson-version>2.0.59</fastjson-version>
+        <mybatis-plus-version>3.5.14</mybatis-plus-version>
+        <guava-version>33.5.0-jre</guava-version>
+        <captcha-version>2.2.5</captcha-version>
     </properties>
 
     <dependencies>
@@ -47,8 +49,8 @@
         <!--数据库相关-->
         <!--mysql-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
             <version>${mysql-version}</version>
         </dependency>
         <!--jdbc-->
@@ -112,19 +114,13 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>32.1.1-jre</version>
+            <version>${guava-version}</version>
         </dependency>
         <!-- Java图形验证码 -->
         <dependency>
-            <groupId>com.github.whvcse</groupId>
-            <artifactId>easy-captcha</artifactId>
-            <version>1.6.2</version>
-        </dependency>
-        <!--兼容高版本JDK,不然使用验证码会报错-->
-        <dependency>
-            <groupId>org.openjdk.nashorn</groupId>
-            <artifactId>nashorn-core</artifactId>
-            <version>15.4</version>
+            <groupId>com.pig4cloud.plugin</groupId>
+            <artifactId>captcha-spring-boot-starter</artifactId>
+            <version>${captcha-version}</version>
         </dependency>
         <!-- jaxb-api -->
         <dependency>
@@ -143,9 +139,16 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>25</source>
+                    <target>25</target>
                     <encoding>UTF-8</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok-version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 

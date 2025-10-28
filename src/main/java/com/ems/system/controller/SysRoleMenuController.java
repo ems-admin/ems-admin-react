@@ -33,10 +33,10 @@ public class SysRoleMenuController extends ResultUtil {
     @GetMapping("/role/menu/list")
     public ResponseEntity<Object> getMenuByRoleId(Long roleId){
         try {
-            return success(true, roleMenuService.getMenuByRoleId(roleId));
+            return success(roleMenuService.getMenuByRoleId(roleId));
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 
@@ -52,10 +52,10 @@ public class SysRoleMenuController extends ResultUtil {
     public ResponseEntity<Object> editMenuRoleByRoleId(@RequestBody RoleMenuDto roleMenuDto){
         try {
             roleMenuService.editMenuRoleByRoleId(roleMenuDto);
-            return success(true, "授权成功");
+            return success("授权成功");
         } catch (BadRequestException e) {
             e.printStackTrace();
-            return fail(false, e.getMsg());
+            return fail(e.getMsg());
         }
     }
 }
