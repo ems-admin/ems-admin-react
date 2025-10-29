@@ -1,9 +1,9 @@
 import {Button, Modal, Tree} from "antd";
 import {useContext, useState} from "react";
-import ModalContext from "../../assets/js/context";
-import {getMenuTable} from "../../api/menu/sysMenu";
-import {errorMsg, successMsg} from "../../assets/js/message";
-import {authorizeRole, getMenusByRoleId} from "../../api/role/sysRole";
+import ModalContext from "@/assets/js/context.js";
+import {getMenuTable} from "@/api/menu/sysMenu.js";
+import {errorMsg, successMsg} from "@/assets/js/message.js";
+import {authorizeRole, getMenusByRoleId} from "@/api/role/sysRole.js";
 
 const AuthorizeRole = () => {
 

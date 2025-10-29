@@ -1,10 +1,10 @@
 import {Button, Input, Modal, Table} from "antd";
 import {useCallback, useEffect, useState} from "react";
-import {errorMsg, infoMsg, successMsg} from "../../assets/js/message";
-import ModalContext from "../../assets/js/context";
-import {delRole, getRoleList} from "../../api/role/sysRole";
-import EditRole from "./EditRole";
-import AuthorizeRole from "./AuthorizeRole";
+import {errorMsg, infoMsg, successMsg} from "@/assets/js/message.js";
+import ModalContext from "@/assets/js/context.js";
+import {delRole, getRoleList} from "@/api/role/sysRole.js";
+import EditRole from "./EditRole.jsx";
+import AuthorizeRole from "./AuthorizeRole.jsx";
 
 const Index = () => {
 

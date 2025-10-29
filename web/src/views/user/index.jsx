@@ -1,10 +1,10 @@
 import {Button, Input, Modal, Switch, Table} from "antd";
 import {useCallback, useEffect, useState} from "react";
-import {delUser, enabledUser, getUserList} from "../../api/user/sysUser";
-import {errorMsg, infoMsg, successMsg} from "../../assets/js/message";
-import ModalContext from "../../assets/js/context";
-import EditUser from "./EditUser";
-import MyPagination from "../../components/MyPagination";
+import {delUser, enabledUser, getUserList} from "@/api/user/sysUser.js";
+import {errorMsg, infoMsg, successMsg} from "@/assets/js/message.js";
+import ModalContext from "@/assets/js/context.js";
+import EditUser from "./EditUser.jsx";
+import MyPagination from "@/components/MyPagination.jsx";
 
 const Index = () => {
 

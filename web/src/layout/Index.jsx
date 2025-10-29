@@ -1,7 +1,7 @@
 import {Layout} from "antd";
-import SysSider from "./SysSider";
-import SysHeader from "./SysHeader";
-import SysContent from "./SysContent";
+import SysSider from "./SysSider.jsx";
+import SysHeader from "./SysHeader.jsx";
+import SysContent from "./SysContent.jsx";
 const {Sider, Header, Content} = Layout
 import {useState} from "react";
 import MenuContext from "../assets/js/context";

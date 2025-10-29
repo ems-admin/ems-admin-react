@@ -1,7 +1,7 @@
 import {Button, Image} from "antd";
 import {useNavigate} from 'react-router-dom'
-import errorImage from '../../assets/image/404.png'
-import '../../assets/css/404.css'
+import errorImage from '@/assets/image/404.png'
+import '@/assets/css/404.css'
 const NotFound = () => {
 
     const navigate = useNavigate()

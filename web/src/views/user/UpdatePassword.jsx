@@ -1,8 +1,8 @@
-import {Button, Form, Input, Modal, Select} from "antd";
+import {Button, Form, Input, Modal} from "antd";
 import {useContext, useState} from "react";
-import ModalContext from "../../assets/js/context";
-import {updatePwd} from "../../api/user/sysUser";
-import {errorMsg, successMsg} from "../../assets/js/message";
+import ModalContext from "@/assets/js/context.js";
+import {updatePwd} from "@/api/user/sysUser.js";
+import {errorMsg, successMsg} from "@/assets/js/message.js";
 
 const UpdatePassword = ({out}) => {
 

@@ -1,4 +1,4 @@
-import '../assets/iconfont/iconfont'
+import '@/assets/iconfont/iconfont'
 import {createFromIconfontCN} from "@ant-design/icons";
 
 const IconFont = createFromIconfontCN({

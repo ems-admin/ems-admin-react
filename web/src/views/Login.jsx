@@ -1,12 +1,12 @@
 import {Button, Form, Image, Input} from "antd";
 import {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom'
-import {getVerifyCode, login} from "../api/login/login";
-import {errorMsg} from "../assets/js/message";
+import {getVerifyCode, login} from "@/api/login/login.js";
+import {errorMsg} from "@/assets/js/message.js";
 import {useDispatch} from "react-redux";
-import {updateToken, updateRefreshToken, updateInfo} from "../store/userRedux";
-import IconFont from "../components/IconFont";
-import '../assets/css/Login.css'
+import {updateToken, updateRefreshToken, updateInfo} from "@/store/userRedux.js";
+import IconFont from "@/components/IconFont.jsx";
+import '@/assets/css/Login.css'
 
 
 const Login = () => {

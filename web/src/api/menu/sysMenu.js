@@ -1,4 +1,4 @@
-import request from "../../assets/js/request";
+import request from "@/assets/js/request.js";
 
 /**
  * 拉取当前用户的所有菜单

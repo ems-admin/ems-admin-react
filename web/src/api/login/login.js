@@ -1,4 +1,4 @@
-import request from "../../assets/js/request";
+import request from "@/assets/js/request.js";
 
 //  登录
 export function login(data){

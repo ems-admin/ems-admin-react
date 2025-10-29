@@ -1,8 +1,8 @@
 import {Tabs} from "antd";
 import {useSelector, useDispatch} from "react-redux";
-import {removeTab, updateActiveKey} from "../store/menuRedux";
+import {removeTab, updateActiveKey} from "@/store/menuRedux.js";
 import {lazy, Suspense} from "react";
-import '../assets/css/Tabs.css'
+import '@/assets/css/Tabs.css'
 
 const SysContent = () => {
 

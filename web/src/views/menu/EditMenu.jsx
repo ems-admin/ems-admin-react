@@ -1,10 +1,10 @@
 import {Button, Col, Dropdown, Form, Input, Modal, Radio, Row, Select, TreeSelect} from "antd";
 import React, {useContext, useState} from "react";
-import ModalContext from "../../assets/js/context";
-import {errorMsg, successMsg} from "../../assets/js/message";
-import {editMenu, getMenuTreeSelect} from "../../api/menu/sysMenu";
-import IconFont from "../../components/IconFont";
-import iconJson from '../../assets/iconfont/iconfont.json'
+import ModalContext from "@/assets/js/context.js";
+import {errorMsg, successMsg} from "@/assets/js/message.js";
+import {editMenu, getMenuTreeSelect} from "@/api/menu/sysMenu.js";
+import IconFont from "@/components/IconFont.jsx";
+import iconJson from '@/assets/iconfont/iconfont.json'
 
 const EditUser = ({getList}) => {
 

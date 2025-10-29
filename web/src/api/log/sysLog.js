@@ -1,4 +1,4 @@
-import request from "../../assets/js/request";
+import request from "@/assets/js/request.js";
 
 /**
  * 获取日志列表

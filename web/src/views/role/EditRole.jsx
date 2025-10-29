@@ -1,8 +1,8 @@
 import {Button, Form, Input, Modal} from "antd";
 import {useContext, useState} from "react";
-import ModalContext from "../../assets/js/context";
-import {editRole} from "../../api/role/sysRole";
-import {errorMsg, successMsg} from "../../assets/js/message";
+import ModalContext from "@/assets/js/context.js";
+import {editRole} from "@/api/role/sysRole.js";
+import {errorMsg, successMsg} from "@/assets/js/message.js";
 
 const EditUser = ({getList}) => {
 

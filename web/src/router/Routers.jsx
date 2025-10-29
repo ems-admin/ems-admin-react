@@ -1,10 +1,10 @@
 import {Route, useMatch, useNavigate, Routes} from "react-router-dom";
 import {useEffect} from "react";
 import Index from "@/layout/Index.jsx";
-import Login from "@/views/Login";
-import Home from "@/views/Home";
+import Login from "@/views/Login.jsx";
+import Home from "@/views/Home.jsx";
 import {useSelector} from "react-redux";
-import NotFound from "@/views/error/404";
+import NotFound from "@/views/error/404.jsx";
 
 // 自定义的路由拦截组件
 const PrivateRoute = ({ path, element }) => {

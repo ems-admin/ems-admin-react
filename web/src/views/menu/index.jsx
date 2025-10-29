@@ -1,9 +1,9 @@
 import {Button, Input, Modal, Table} from "antd";
 import {useCallback, useEffect, useState} from "react";
-import {errorMsg, infoMsg, successMsg} from "../../assets/js/message";
-import ModalContext from "../../assets/js/context";
-import {delMenu, getMenuTable} from "../../api/menu/sysMenu";
-import EditMenu from "./EditMenu";
+import {errorMsg, infoMsg, successMsg} from "@/assets/js/message.js";
+import ModalContext from "@/assets/js/context.js";
+import {delMenu, getMenuTable} from "@/api/menu/sysMenu.js";
+import EditMenu from "./EditMenu.jsx";
 
 const Index = () => {
 

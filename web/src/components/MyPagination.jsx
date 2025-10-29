@@ -1,6 +1,6 @@
 import {Pagination} from "antd";
 import {useContext} from "react";
-import PageContext from "../assets/js/context";
+import PageContext from "@/assets/js/context.js";
 
 const MyPagination = ({getList}) => {
 

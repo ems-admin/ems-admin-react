@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import {Button, Input, Select, Table} from "antd";
-import ModalContext from "../../assets/js/context";
-import MyPagination from "../../components/MyPagination";
-import {getLogList} from "../../api/log/sysLog";
-import {errorMsg} from "../../assets/js/message";
+import ModalContext from "@/assets/js/context.js";
+import MyPagination from "@/components/MyPagination.jsx";
+import {getLogList} from "@/api/log/sysLog.js";
+import {errorMsg} from "@/assets/js/message.js";
 
 const Index = () => {
 

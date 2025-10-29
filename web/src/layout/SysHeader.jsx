@@ -1,14 +1,14 @@
 import {useState} from "react";
 import {Button, Dropdown, Modal, Space} from "antd";
-import store from "../store/store";
-import '../assets/css/Header.css'
+import store from "@/store/store";
+import '@/assets/css/Header.css'
 import {DownOutlined} from "@ant-design/icons";
-import ModalContext from "../assets/js/context";
-import UpdatePassword from '../views/user/UpdatePassword'
+import ModalContext from "@/assets/js/context.js";
+import UpdatePassword from '@/views/user/UpdatePassword.jsx'
 import {useDispatch} from "react-redux";
-import {updateToken} from "../store/userRedux";
+import {updateToken} from "@/store/userRedux.js";
 import {useNavigate} from "react-router-dom";
-import {infoMsg} from "../assets/js/message";
+import {infoMsg} from "@/assets/js/message.js";
 
 const SysHeader = () => {
 

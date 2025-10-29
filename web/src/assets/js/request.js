@@ -1,7 +1,7 @@
 import axios from "axios";
-import store from '../../store/store'
-import {errorMsg} from "./message";
-import {updateRefreshToken, updateToken} from "../../store/userRedux";
+import store from '@/store/store.js'
+import {errorMsg} from "./message.js";
+import {updateRefreshToken, updateToken} from "@/store/userRedux";
 
 //  创建axios实例
 const instance = axios.create({

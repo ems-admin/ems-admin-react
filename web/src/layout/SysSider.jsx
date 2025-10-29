@@ -1,13 +1,13 @@
 import {Image, Menu} from "antd";
 import {useContext, useEffect, useState} from "react";
-import {getMenuTree} from "../api/menu/sysMenu";
-import {errorMsg} from "../assets/js/message";
+import {getMenuTree} from "@/api/menu/sysMenu.js";
+import {errorMsg} from "@/assets/js/message.js";
 import {useDispatch, useSelector} from "react-redux";
-import {updateActiveKey, updateOpenTabs} from "../store/menuRedux";
-import Logo from '../assets/image/ems.png'
-import MenuContext from "../assets/js/context";
-import IconFont from "../components/IconFont";
-import '../assets/css/Menu.css'
+import {updateActiveKey, updateOpenTabs} from "@/store/menuRedux.js";
+import Logo from '@/assets/image/ems.png'
+import MenuContext from "@/assets/js/context.js";
+import IconFont from "@/components/IconFont.jsx";
+import '@/assets/css/Menu.css'
 
 const SysSider = () => {
 
