@@ -84,6 +84,21 @@ const Index = () => {
         })
     }
 
+    const columns = [
+        {key: 'roleName', title: '角色名称', dataIndex: 'roleName'},
+        {key: 'roleCode', title: '角色代码', dataIndex: 'roleCode'},
+        {key: 'description', title: '角色说明', dataIndex: 'description'},
+        {key: 'operate', title: '操作', dataIndex: 'operate', width: 240,
+            render: (_, record) => (
+                <>
+                    <Button className={'success'} onClick={() => authorizeRole(record.id)}>授权</Button>
+                    <Button type={"primary"} onClick={() => editRole(JSON.parse(JSON.stringify(record)))}>编辑</Button>
+                    <Button type={"primary"} danger onClick={() => deleteRole(record.id)}>删除</Button>
+                </>
+            )
+        },
+    ]
+
     useEffect(() => {
         getRoleTable()
     }, [])
@@ -109,23 +124,12 @@ const Index = () => {
             </div>
             <Table
                 className={'no-page-table'}
+                columns={columns}
                 dataSource={dataSource}
                 rowKey={'id'}
                 bordered
                 pagination={false}
-            >
-                <column key={'roleName'} title={'角色名称'} dataIndex={'roleName'}></column>
-                <column key={'roleCode'} title={'角色代码'} dataIndex={'roleCode'}></column>
-                <column key={'description'} title={'角色说明'} dataIndex={'description'}></column>
-                <column key={'operate'} title={'操作'} dataIndex={'operate'} width={240} align={'center'}
-                        render={(_, record) => (
-                            <>
-                                <Button className={'success'} onClick={() => authorizeRole(record.id)}>授权</Button>
-                                <Button type={"primary"} onClick={() => editRole(JSON.parse(JSON.stringify(record)))}>编辑</Button>
-                                <Button type={"primary"} danger onClick={() => deleteRole(record.id)}>删除</Button>
-                            </>
-                        )}></column>
-            </Table>
+            ></Table>
 
             {/*角色编辑页面*/}
             <ModalContext.Provider value={{openEdit, setOpenEdit, roleObj}}>

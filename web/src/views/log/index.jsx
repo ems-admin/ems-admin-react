@@ -55,6 +55,23 @@ const Index = () => {
     const handleChild = () => {
         getLogs()
     }
+    //  列表
+    const columns = [
+        {key: "index", title: "序号", dataIndex: "index", width: 60, align: "center",
+            render: (text, record, index) => (currentPage - 1) * pageSize + index + 1
+        },
+        {key: "username", title: "操作人", dataIndex: "username", width: 100,},
+        {key: "description", title: "操作说明", dataIndex: "description", ellipsis: true},
+        {key: "method", title: "请求方法", dataIndex: "method", ellipsis: true},
+        {key: "params", title: "请求参数", dataIndex: "params", ellipsis: true},
+        {key: "ip", title: "IP", dataIndex: "ip", width: 120,},
+        {key: "logType", title: "日志类型", dataIndex: "logType",
+            render: (logType) => logType === '1' ? '成功' : '失败'
+        },
+        {key: "exceptionDetail", title: "错误详情", dataIndex: "exceptionDetail", ellipsis: true},
+        {key: "time", title: "请求耗时", dataIndex: "time", width: 100,},
+        {key: "createTime", title: "操作时间", dataIndex: "createTime", width: 150,}
+    ]
 
     useEffect(() => {
         getLogs()
@@ -87,28 +104,13 @@ const Index = () => {
             </div>
             <Table
                 className={'page-table'}
+                columns={columns}
                 dataSource={dataSource}
                 rowKey={'id'}
                 bordered
                 pagination={false}
                 loading={loading}
-            >
-                <column key={'index'} title={'序号'} dataIndex={'index'} width={60} align={'center'}
-                        render={(text, record, index) => (
-                            (currentPage - 1) * pageSize + index + 1
-                        )}></column>
-                <column key={'username'} title={'操作人'} dataIndex={'username'} width={100}></column>
-                <column key={'description'} title={'操作说明'} dataIndex={'description'} ellipsis={true}></column>
-                <column key={'method'} title={'请求方法'} dataIndex={'method'} ellipsis={true}></column>
-                <column key={'params'} title={'请求参数'} dataIndex={'params'} ellipsis={true}></column>
-                <column key={'ip'} title={'IP'} dataIndex={'ip'} width={120}></column>
-                <column key={'logType'} title={'日志类型'} dataIndex={'logType'} render={(logType) => (
-                    logType === '1' ? '成功' : '失败'
-                )}></column>
-                <column key={'exceptionDetail'} title={'错误详情'} dataIndex={'exceptionDetail'} ellipsis={true}></column>
-                <column key={'time'} title={'请求耗时'} dataIndex={'time'} width={100}></column>
-                <column key={'createTime'} title={'操作时间'} dataIndex={'createTime'} width={150}></column>
-            </Table>
+            ></Table>
 
             <ModalContext.Provider value={{pageSize, setPageSize, currentPage, setCurrentPage, total, setTotal}}>
                 {/*分页*/}

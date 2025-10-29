@@ -98,6 +98,26 @@ const Index = () => {
         getUserTable()
     }, [pageSize, currentPage])
 
+    const columns = [
+        {key: 'username', title: '用户名', dataIndex: 'username'},
+        {key: 'nickName', title: '昵称', dataIndex: 'nickName'},
+        {key: 'roles', title: '角色', dataIndex: 'roles'},
+        {key: 'enabled', title: '角色', dataIndex: 'enabled',
+            render: (_, record) => (
+                <Switch checkedChildren={'启用'} unCheckedChildren={'停用'} defaultChecked={record.enabled}
+                        onChange={(checked => changeStatus(checked, record))}/>
+            )
+        },
+        {key: 'operate', title: '', dataIndex: 'operate', width: 150,
+            render: (_, record) => (
+                <>
+                    <Button type={"primary"} onClick={() => editUser(JSON.parse(JSON.stringify(record)))}>编辑</Button>
+                    <Button type={"primary"} size={"small"} danger onClick={() => deleteUser(record.id)}>删除</Button>
+                </>
+            )
+        }
+    ]
+
     useEffect(() => {
         getUserTable()
     }, [])
@@ -123,25 +143,12 @@ const Index = () => {
             </div>
             <Table
                 className={'page-table'}
+                columns={columns}
                 dataSource={dataSource}
                 rowKey={'id'}
                 bordered
                 pagination={false}
-            >
-                <column key={'username'} title={'用户名'} dataIndex={'username'}></column>
-                <column key={'nickName'} title={'昵称'} dataIndex={'nickName'}></column>
-                <column key={'roles'} title={'角色'} dataIndex={'roles'}></column>
-                <column key={'enabled'} title={'状态'} dataIndex={'enabled'} render={(_, record) => (
-                    <Switch checkedChildren={'启用'} unCheckedChildren={'停用'} defaultChecked={record.enabled}
-                            onChange={(checked => changeStatus(checked, record))}/>
-                )}></column>
-                <column key={'operate'} title={'操作'} dataIndex={'operate'} width={150} align={'center'}
-                    render={(_, record) => (<>
-                        <Button type={"primary"} onClick={() => editUser(JSON.parse(JSON.stringify(record)))}>编辑</Button>
-                        <Button type={"primary"} size={"small"} danger onClick={() => deleteUser(record.id)}>删除</Button>
-                    </>
-                )}></column>
-            </Table>
+            ></Table>
             {/*分页*/}
             <ModalContext.Provider value={{pageSize, setPageSize, currentPage, setCurrentPage, total, setTotal}}>
                 <MyPagination getList={handleChild}></MyPagination>

@@ -71,6 +71,29 @@ const Index = () => {
         })
     }
 
+    const columns = [
+        {key: 'name', title: '菜单名称', dataIndex: 'name',},
+        {key: 'path', title: '菜单路径', dataIndex: 'path',},
+        {key: 'realpath', title: '组件地址', dataIndex: 'realpath',},
+        {key: 'permission', title: '权限', dataIndex: 'permission',},
+        {key: 'type', title: '类型', dataIndex: 'type', render: (type) => {
+            if (type === '1') {
+                return 'type'
+            } else if (type === '2') {
+                return '页面'
+            } else if (type === '3') {
+                return '按钮'
+            }
+        }},
+        {key: 'sort', title: '排序', dataIndex: 'sort',},
+        {key: 'option', title: '操作', dataIndex: 'option', width: 100, render: (_, record) => (
+            <>
+                <Button type={"primary"} onClick={() => editMenu(JSON.parse(JSON.stringify(record)))}>编辑</Button>
+                <Button type={"primary"} danger onClick={() => deleteMenu(record.id)}>删除</Button>
+            </>
+        )}
+    ]
+
     useEffect(() => {
         getMenuList()
     }, [])
@@ -96,32 +119,12 @@ const Index = () => {
             </div>
             <Table
                 className={'no-page-table'}
+                columns={columns}
                 dataSource={dataSource}
                 rowKey={'id'}
                 bordered
                 pagination={false}
-            >
-                <column title={'菜单名称'} dataIndex={'name'} key={'name'}></column>
-                <column title={'菜单路径'} dataIndex={'path'} key={'path'}></column>
-                <column title={'组件地址'} dataIndex={'realpath'} key={'realpath'}></column>
-                <column title={'权限'} dataIndex={'permission'} key={'permission'}></column>
-                <column title={'类型'} dataIndex={'type'} key={'type'} render={(type) => {
-                    if (type === '1'){
-                        return '菜单'
-                    } else if (type === '2'){
-                        return '页面'
-                    } else if (type === '3'){
-                        return '按钮'
-                    }
-                }}></column>
-                <column title={'排序'} dataIndex={'sort'} key={'sort'}></column>
-                <column title={'操作'} dataIndex={'option'} key={'option'} width={150} align={'center'} render={(_, record) => (
-                    <>
-                        <Button type={"primary"} onClick={() => editMenu(JSON.parse(JSON.stringify(record)))}>编辑</Button>
-                        <Button type={"primary"} danger onClick={() => deleteMenu(record.id)}>删除</Button>
-                    </>
-                )}></column>
-            </Table>
+            ></Table>
 
             {/*菜单编辑页面*/}
             <ModalContext.Provider value={{openEdit, setOpenEdit, menuObj}}>
