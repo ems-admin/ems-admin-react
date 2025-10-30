@@ -108,7 +108,7 @@ const Index = () => {
                         onChange={(checked => changeStatus(checked, record))}/>
             )
         },
-        {key: 'operate', title: '', dataIndex: 'operate', width: 150,
+        {key: 'operate', title: '操作', dataIndex: 'operate', width: 200, align: 'center',
             render: (_, record) => (
                 <>
                     <Button type={"primary"} onClick={() => editUser(JSON.parse(JSON.stringify(record)))}>编辑</Button>

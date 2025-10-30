@@ -86,7 +86,7 @@ const Index = () => {
             }
         }},
         {key: 'sort', title: '排序', dataIndex: 'sort',},
-        {key: 'option', title: '操作', dataIndex: 'option', width: 100, render: (_, record) => (
+        {key: 'option', title: '操作', dataIndex: 'option', width: 200, align: 'center', render: (_, record) => (
             <>
                 <Button type={"primary"} onClick={() => editMenu(JSON.parse(JSON.stringify(record)))}>编辑</Button>
                 <Button type={"primary"} danger onClick={() => deleteMenu(record.id)}>删除</Button>

@@ -88,7 +88,7 @@ const Index = () => {
         {key: 'roleName', title: '角色名称', dataIndex: 'roleName'},
         {key: 'roleCode', title: '角色代码', dataIndex: 'roleCode'},
         {key: 'description', title: '角色说明', dataIndex: 'description'},
-        {key: 'operate', title: '操作', dataIndex: 'operate', width: 240,
+        {key: 'operate', title: '操作', dataIndex: 'operate', width: 240, align: 'center',
             render: (_, record) => (
                 <>
                     <Button className={'success'} onClick={() => authorizeRole(record.id)}>授权</Button>
