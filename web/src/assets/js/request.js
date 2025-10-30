@@ -1,7 +1,6 @@
 import axios from "axios";
-import store from '@/store/store.js'
 import {errorMsg} from "./message.js";
-import {updateRefreshToken, updateToken} from "@/store/userRedux";
+import useUserStore from "@/store/useUserStore.js"
 
 //  创建axios实例
 const instance = axios.create({
@@ -12,11 +11,11 @@ const instance = axios.create({
 //  request拦截器
 instance.interceptors.request.use(
     config => {
-        const token = store.getState().userInfo.userInfo.token
+        const token  = useUserStore.getState().token;
         //  如果已登录
         if (token){
             //  在请求头添加token
-            config.headers['Authorization'] = 'Bearer ' + token
+            config.headers['Authorization'] = 'Bearer ' + token;
         }
         //  统一请求类型json
         config.headers['Content-Type'] = 'application/json'
@@ -45,17 +44,18 @@ instance.interceptors.response.use(
             //  请求返回错误
             const data = error.response.data
             if (code){
+                const {token, refreshToken, updateToken} = useUserStore()
                 //  如果是未授权
                 if (code === 401){
                     //  说明token过期，使用refreshToken对当前token进行刷新
-                    const refresh = store.getState().userInfo.userInfo.refreshToken
+                    const refresh = refreshToken ? refreshToken : null
                     //  如果存在
                     if (refresh){
-                        return againRequest(refresh, error)
+                        return againRequest(refresh, error, token)
                     //  否则
                     } else {
                         //  清空token
-                        store.dispatch(updateToken(null))
+                        updateToken(null)
                         //  并跳转到登录页面，进行重新登录
                         this.props.history.push('/login')
                     }
@@ -80,13 +80,15 @@ instance.interceptors.response.use(
 
 /**
  * 重新请求
+ * @param refresh
  * @param error
+ * @param token
  * @returns {Promise<void>}
  */
-async function againRequest(refresh, error){
-    await refreshToken(refresh)
+async function againRequest(refresh, error, token){
+    await refreshTokenHandle(refresh)
     const config = error.response.config
-    config.headers['Authorization'] = 'Bearer ' + store.getState().userInfo.userInfo.token
+    config.headers['Authorization'] = 'Bearer ' + token
     const res = await axios.request(config)
     return res.data
 }
@@ -95,7 +97,7 @@ async function againRequest(refresh, error){
  * 刷新token
  * @param refresh
  */
-function refreshToken(refresh){
+function refreshTokenHandle(refresh){
     //  刷新token
     return axios({
         url: '/auth/refresh',
@@ -104,17 +106,19 @@ function refreshToken(refresh){
             Authorization: `Bearer ${refresh}`
         }
     }).then(res => {
+        const {updateToken} = useUserStore()
         if (res.data.success){
             //  刷新token
-            store.dispatch(updateToken(res.data.data))
+            updateToken(res.data.data)
         } else {
             errorMsg(res.msg)
             //  清空token
-            store.dispatch(updateToken(null))
+            updateToken(null)
         }
     }).catch(() => {
+        const {updateRefreshToken} = useUserStore()
         //  如果刷新token失败,则直接清空refreshToken,避免重复请求
-        store.dispatch(updateRefreshToken(null))
+        updateRefreshToken(null)
     })
 }
 

@@ -1,21 +1,18 @@
 import {useState} from "react";
 import {Button, Dropdown, Modal, Space} from "antd";
-import store from "@/store/store";
 import '@/assets/css/Header.css'
 import {DownOutlined} from "@ant-design/icons";
 import ModalContext from "@/assets/js/context.js";
 import UpdatePassword from '@/views/user/UpdatePassword.jsx'
-import {useDispatch} from "react-redux";
-import {updateToken} from "@/store/userRedux.js";
+import useUserStore from "@/store/useUserStore.js";
 import {useNavigate} from "react-router-dom";
 import {infoMsg} from "@/assets/js/message.js";
 
 const SysHeader = () => {
 
+    const {info, updateToken} = useUserStore();
     //  当前登录用户昵称
-    const nickName = store.getState().userInfo.userInfo.info ==  null ? '' : store.getState().userInfo.userInfo.info.nickName
-
-    const dispatch = useDispatch()
+    const nickName = info ==  null ? '' : info.nickName
 
     const navigate = useNavigate();
 
@@ -60,7 +57,7 @@ const SysHeader = () => {
     //  退出操作
     const out = () => {
         //  清空token
-        dispatch(updateToken(null))
+        updateToken(null)
         //  跳转到登录页面
         navigate('/login', { replace: true });
     }

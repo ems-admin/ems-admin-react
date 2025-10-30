@@ -2,8 +2,6 @@ import {Image, Menu} from "antd";
 import {useContext, useEffect, useState} from "react";
 import {getMenuTree} from "@/api/menu/sysMenu.js";
 import {errorMsg} from "@/assets/js/message.js";
-import {useDispatch, useSelector} from "react-redux";
-// import {updateActiveKey, updateOpenTabs} from "@/store/menuRedux.js";
 import useMenuStore from "@/store/useMenuStore.js"
 import Logo from '@/assets/image/ems.png'
 import MenuContext from "@/assets/js/context.js";
@@ -16,15 +14,9 @@ const SysSider = () => {
 
     const [menuStyle, setMenuStyle] = useState({width: '200px', height: 'calc(100vh - 64px)'})
 
-    const dispatch = useDispatch()
-
     const {activeKey, updateActiveKey, updateOpenTabs} = useMenuStore()
 
     const {collapsed, setCollapsed} = useContext(MenuContext);
-
-    //  获取当前激活tab标签的key值
-    // const activeKey = useSelector(state => state.menuInfo.menuInfo.activeKey)
-    // const activeKeys = activeKey
 
     //  首页不需要权限配置,所以不用保存在数据库中动态获取,在此处定义首页的菜单对象
     const homeItem = {

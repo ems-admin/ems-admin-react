@@ -3,13 +3,13 @@ import {useEffect} from "react";
 import Index from "@/layout/Index.jsx";
 import Login from "@/views/Login.jsx";
 import Home from "@/views/Home.jsx";
-import {useSelector} from "react-redux";
+import useUserStore from "@/store/useUserStore.js";
 import NotFound from "@/views/error/404.jsx";
 
 // 自定义的路由拦截组件
 const PrivateRoute = ({ path, element }) => {
 
-    const token = useSelector(state => state.userInfo.userInfo.token)
+    const token = useUserStore.token;
     //  如果token存在
     const isAuthenticated = token !== null && token !== undefined;
     const navigate = useNavigate();

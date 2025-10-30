@@ -3,16 +3,13 @@ import {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom'
 import {getVerifyCode, login} from "@/api/login/login.js";
 import {errorMsg} from "@/assets/js/message.js";
-import {useDispatch} from "react-redux";
-import {updateToken, updateRefreshToken, updateInfo} from "@/store/userRedux.js";
+import useUserStore from "@/store/useUserStore.js";
 import IconFont from "@/components/IconFont.jsx";
 import '@/assets/css/Login.css'
 
 
 const Login = () => {
-
-    const dispatch = useDispatch()
-
+    const {updateToken, updateRefreshToken, updateInfo} = useUserStore();
     const navigate = useNavigate();
 
     //  提交登录
@@ -23,11 +20,11 @@ const Login = () => {
         login(formData).then(res => {
             if (res.success){
                 //  缓存token
-                dispatch(updateToken(res.data.token))
+                updateToken(res.data.token)
                 //  缓存刷新token
-                dispatch(updateRefreshToken(res.data.refreshToken))
+                updateRefreshToken(res.data.refreshToken)
                 //  缓存当前登录用户信息
-                dispatch(updateInfo(res.data.userDto))
+                updateInfo(res.data.userDto)
                 //  跳转到主页
                 navigate('/index')
             } else {
