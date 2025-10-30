@@ -3,7 +3,8 @@ import {useContext, useEffect, useState} from "react";
 import {getMenuTree} from "@/api/menu/sysMenu.js";
 import {errorMsg} from "@/assets/js/message.js";
 import {useDispatch, useSelector} from "react-redux";
-import {updateActiveKey, updateOpenTabs} from "@/store/menuRedux.js";
+// import {updateActiveKey, updateOpenTabs} from "@/store/menuRedux.js";
+import useMenuStore from "@/store/useMenuStore.js"
 import Logo from '@/assets/image/ems.png'
 import MenuContext from "@/assets/js/context.js";
 import IconFont from "@/components/IconFont.jsx";
@@ -17,10 +18,13 @@ const SysSider = () => {
 
     const dispatch = useDispatch()
 
+    const {activeKey, updateActiveKey, updateOpenTabs} = useMenuStore()
+
     const {collapsed, setCollapsed} = useContext(MenuContext);
 
     //  获取当前激活tab标签的key值
-    const activeKey = useSelector(state => state.menuInfo.menuInfo.activeKey)
+    // const activeKey = useSelector(state => state.menuInfo.menuInfo.activeKey)
+    // const activeKeys = activeKey
 
     //  首页不需要权限配置,所以不用保存在数据库中动态获取,在此处定义首页的菜单对象
     const homeItem = {
@@ -60,13 +64,19 @@ const SysSider = () => {
         const label = domEvent.target.innerHTML
         const path = item.props.path
         const realpath = item.props.realpath
-        console.log('点击了菜单', item)
-        dispatch(updateActiveKey(path))
-        dispatch(updateOpenTabs({
+        console.log('点击了菜单', label, path, realpath)
+        updateActiveKey(path)
+        updateOpenTabs({
             label: label,
             key: path,
-            realpath: realpath
-        }))
+            realpath: realpath,
+        })
+        // dispatch(updateActiveKey(path))
+        // dispatch(updateOpenTabs({
+        //     label: label,
+        //     key: path,
+        //     realpath: realpath
+        // }))
     }
 
     //  logo样式
